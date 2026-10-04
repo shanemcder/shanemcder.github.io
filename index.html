@@ -26,11 +26,6 @@
             line-height: 1.6;
         }
 
-        body.listening
-        {
-            overflow: hidden;
-        }
-
         main
         {
             max-width: 850px;
@@ -104,132 +99,6 @@
             font-size: 14px;
         }
 
-        button
-        {
-            font: inherit;
-            cursor: pointer;
-            background: transparent;
-            border: 1px solid #bbb;
-            border-radius: 30px;
-            padding: 10px 24px;
-        }
-
-        button:disabled
-        {
-            opacity: 0.5;
-            cursor: wait;
-        }
-
-        button:focus-visible,
-        input:focus-visible
-        {
-            outline: 2px solid #a58aff;
-            outline-offset: 5px;
-        }
-
-        .song
-        {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .song + .song
-        {
-            margin-top: 28px;
-        }
-
-        .song small
-        {
-            display: block;
-            color: #888;
-        }
-
-        #status
-        {
-            color: #777;
-            font-size: 14px;
-        }
-
-        #experience
-        {
-            position: fixed;
-            inset: 0;
-            background: #050507;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s, visibility 1s;
-            z-index: 5;
-            color: #fff;
-        }
-
-        #experience.open
-        {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        canvas
-        {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .caption
-        {
-            position: absolute;
-            top: 28px;
-            left: 28px;
-            font-size: 12px;
-            letter-spacing: 0.14em;
-            color: #999;
-        }
-
-        .exit
-        {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            color: #ccc;
-            border-color: #444;
-        }
-
-        .controls
-        {
-            position: absolute;
-            bottom: 24px;
-            left: 24px;
-            right: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            color: #bbb;
-            font-size: 13px;
-        }
-
-        .controls button
-        {
-            color: #ddd;
-            border-color: #444;
-            padding: 7px 16px;
-        }
-
-        .controls label
-        {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
-        #gentle
-        {
-            accent-color: #b2a4cd;
-        }
-
         @media (max-width: 600px)
         {
             main
@@ -242,38 +111,14 @@
             {
                 margin-bottom: 85px;
             }
-
-            .controls
-            {
-                left: 16px;
-                right: 16px;
-            }
-
-            .caption
-            {
-                left: 20px;
-            }
-
-            .song
-            {
-                align-items: flex-start;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce)
-        {
-            #experience
-            {
-                transition-duration: 0.2s;
-            }
         }
     </style>
 </head>
 
 <body>
-    <main id="portfolio">
+    <main>
         <nav aria-label="Main navigation">
-            <a href="#music">Music</a>
+            <a href="sound.html">Sound</a>
             <a href="#contact">Contact</a>
             <a href="resume.pdf" download="Shane_McDermott_Resume.pdf">
                 Resume
@@ -284,44 +129,6 @@
             <h1>Shane McDermott.</h1>
             <p class="intro">I am passionate about creating.</p>
         </header>
-
-        <section id="music">
-            <h2>Music</h2>
-
-            <div class="song">
-                <div>
-                    Young Turks
-                    <small>A living audiovisual composition</small>
-                </div>
-
-                <button
-                    class="track-play"
-                    type="button"
-                    data-src="young-turks.m4a"
-                    data-title="Young Turks"
-                >
-                    ▶ Play
-                </button>
-            </div>
-
-            <div class="song">
-                <div>
-                    Palermo
-                    <small>A living audiovisual composition</small>
-                </div>
-
-                <button
-                    class="track-play"
-                    type="button"
-                    data-src="palermo.m4a"
-                    data-title="Palermo"
-                >
-                    ▶ Play
-                </button>
-            </div>
-
-            <p id="status" role="status"></p>
-        </section>
 
         <section id="contact">
             <h2>Find me</h2>
@@ -357,34 +164,5 @@
 
         <footer>© Shane McDermott</footer>
     </main>
-
-    <div
-        id="experience"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Audiovisual player"
-        aria-hidden="true"
-    >
-        <canvas id="lights" aria-hidden="true"></canvas>
-
-        <div class="caption">YOUNG TURKS</div>
-
-        <button class="exit" id="exit" type="button">
-            Exit ↗
-        </button>
-
-        <div class="controls">
-            <button id="pause" type="button">Pause</button>
-
-            <label>
-                <input id="gentle" type="checkbox">
-                Gentle visuals
-            </label>
-        </div>
-    </div>
-
-    <audio id="audio" preload="metadata"></audio>
-
-    <script src="visualizer.js"></script>
 </body>
 </html>

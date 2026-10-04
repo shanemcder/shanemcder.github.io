@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sound by Shane McDermott. Pick a record and listen.">
+    <title>Sound — Shane McDermott</title>
+
+    <style>
+        :root
+        {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color-scheme: dark;
+            --muted: #85858b;
+            --ink: #eeeeef;
+        }
+
+        *
+        {
+            box-sizing: border-box;
+        }
+
+        body
+        {
+            margin: 0;
+            background: #111112;
+            color: var(--ink);
+            line-height: 1.5;
+        }
+
+        main
+        {
+            max-width: 1240px;
+            margin: auto;
+            padding: 42px 40px 30px;
+        }
+
+        a
+        {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover
+        {
+            color: #bbb;
+        }
+
+        nav
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .wordmark
+        {
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.04em;
+        }
+
+        .nav-links
+        {
+            display: flex;
+            gap: 28px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .nav-links [aria-current]
+        {
+            color: var(--ink);
+            text-decoration: underline;
+            text-underline-offset: 7px;
+        }
+
+        .page-heading
+        {
+            margin: 74px 0 52px;
+        }
+
+        .eyebrow
+        {
+            margin: 0;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        h1
+        {
+            margin: 12px 0 14px;
+            font-size: clamp(60px, 9vw, 102px);
+            letter-spacing: -0.065em;
+            line-height: 1;
+            font-weight: 500;
+        }
+
+        .page-heading > p:last-child
+        {
+            margin: 0;
+            font-size: 17px;
+            color: #a3a3a8;
+        }
+
+        .listening-room
+        {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        h2
+        {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .collection > h2
+        {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #303033;
+        }
+
+        .collection > h2 > span
+        {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .records
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 32px;
+        }
+
+        button
+        {
+            font: inherit;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .record-choice
+        {
+            border: 0;
+            background: none;
+            padding: 0;
+            text-align: left;
+            cursor: grab;
+            min-width: 0;
+        }
+
+        .record-choice:active
+        {
+            cursor: grabbing;
+        }
+
+        .vinyl
+        {
+            position: relative;
+            display: flex;
+            width: 100%;
+            aspect-ratio: 1;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at center,
+                #161618 0px,
+                #161618 2px,
+                #28282a 3px,
+                #101012 4px
+            );
+            border: 1px solid #39393d;
+            box-shadow: 0 12px 24px #0005;
+            transition: transform 0.4s;
+        }
+
+        .vinyl::before
+        {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 30deg,
+                transparent 0deg,
+                #ffffff0b 50deg,
+                transparent 90deg,
+                transparent 180deg,
+                #ffffff0d 230deg,
+                transparent 280deg
+            );
+        }
+
+        .record-label
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 45%;
+            height: 45%;
+            border-radius: 50%;
+            background: var(--label);
+            color: #151515;
+            padding: 9% 1%;
+            z-index: 1;
+        }
+
+        .record-label > span
+        {
+            font-size: clamp(4px, 0.48vw, 7px);
+            letter-spacing: 0.08em;
+        }
+
+        .record-label strong
+        {
+            font-size: clamp(8px, 0.95vw, 13px);
+            text-align: center;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+        }
+
+        .record-label i
+        {
+            background: #161618;
+            border: 2px solid #ffffff44;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .record-info
+        {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .record-info strong
+        {
+            font-weight: 500;
+        }
+
+        .record-info > span
+        {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .record-info > span > span
+        {
+            margin-left: 8px;
+        }
+
+        .record-choice:hover .vinyl
+        {
+            transform: translateY(-5px) rotate(-8deg);
+        }
+
+        .record-choice[aria-pressed="true"] .record-info strong
+        {
+            color: #fff;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
+
+        .record-choice.spinning .vinyl
+        {
+            animation: spin 14s linear infinite;
+        }
+
+        .record-choice.is-paused .vinyl
+        {
+            animation-play-state: paused;
+        }
+
+        .record-choice.dragging
+        {
+            opacity: 0.4;
+        }
+
+        .collection-hint
+        {
+            margin: 32px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .jukebox
+        {
+            border: 1px solid #39393d;
+            border-radius: 15px;
+            padding: 22px;
+            background: linear-gradient(140deg, #232325, #19191b 65%);
+            box-shadow: 0 24px 64px #0003;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .machine-heading
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .machine-heading h2
+        {
+            font-size: 10px;
+            letter-spacing: 0.18em;
+        }
+
+        .machine-state
+        {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+        }
+
+        .machine-state i
+        {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #707076;
+        }
+
+        .machine-state i.on
+        {
+            background: #b9d1b6;
+            box-shadow: 0 0 7px #b9d1b644;
+        }
+
+        .display
+        {
+            position: relative;
+            aspect-ratio: 1.5;
+            border: 1px solid #36363a;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #050507;
+        }
+
+        canvas
+        {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .empty-display
+        {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            color: #707078;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .empty-display p
+        {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .empty-orbit
+        {
+            display: block;
+            width: 64px;
+            height: 64px;
+            border: 1px solid #33333a;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .empty-orbit::before,
+        .empty-orbit::after
+        {
+            content: "";
+            position: absolute;
+            border: 1px solid #292930;
+            border-radius: 50%;
+            inset: 8px;
+        }
+
+        .empty-orbit::after
+        {
+            inset: 16px;
+        }
+
+        .empty-display[hidden]
+        {
+            display: none;
+        }
+
+        .now-playing
+        {
+            margin: 22px 0;
+        }
+
+        .now-playing h3
+        {
+            font-size: 21px;
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            margin: 5px 0 0;
+        }
+
+        .slot
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 19px 18px;
+            border: 1px dashed #4b4b51;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .slot-line
+        {
+            height: 7px;
+            width: 75%;
+            background: #080809;
+            border-radius: 5px;
+            border-top: 1px solid #000;
+            box-shadow: 0 1px 0 #ffffff15;
+        }
+
+        #slot-text
+        {
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            color: #aaaab0;
+        }
+
+        .jukebox.drag-over
+        {
+            border-color: #c5c5cd;
+            transform: translateY(-3px);
+        }
+
+        .jukebox.drag-over .slot
+        {
+            background: #ffffff08;
+            border-color: #d4d4dc;
+        }
+
+        .controls
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 21px;
+        }
+
+        .playback-buttons
+        {
+            display: flex;
+            gap: 8px;
+        }
+
+        .controls button
+        {
+            padding: 7px 13px;
+            border: 1px solid #4a4a50;
+            border-radius: 24px;
+            background: transparent;
+            font-size: 11px;
+        }
+
+        .controls button:disabled
+        {
+            opacity: 0.35;
+            cursor: default;
+        }
+
+        .controls label
+        {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-size: 10px;
+            color: #aaaab0;
+            white-space: nowrap;
+        }
+
+        .controls input
+        {
+            accent-color: #b7b7c7;
+        }
+
+        #status
+        {
+            min-height: 17px;
+            color: #b0b0b6;
+            font-size: 11px;
+            margin: 14px 0 0;
+        }
+
+        footer
+        {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 70px;
+            padding-top: 22px;
+            border-top: 1px solid #29292d;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        .slot:focus-visible
+        {
+            outline: 2px solid #c4b8e3;
+            outline-offset: 6px;
+        }
+
+        @keyframes spin
+        {
+            to
+            {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 800px)
+        {
+            main
+            {
+                padding: 28px 24px;
+            }
+
+            .listening-room
+            {
+                grid-template-columns: 1fr;
+                gap: 38px;
+            }
+
+            .page-heading
+            {
+                margin: 60px 0 38px;
+            }
+
+            .records
+            {
+                max-width: 460px;
+                margin: 26px auto 0;
+                gap: 28px;
+            }
+
+            .record-label > span
+            {
+                font-size: 6px;
+            }
+
+            .record-label strong
+            {
+                font-size: 12px;
+            }
+
+            .collection-hint
+            {
+                text-align: center;
+            }
+
+            .jukebox
+            {
+                max-width: 600px;
+                width: 100%;
+                margin: auto;
+            }
+        }
+
+        @media (max-width: 440px)
+        {
+            main
+            {
+                padding: 24px 18px;
+            }
+
+            nav
+            {
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .wordmark
+            {
+                max-width: 105px;
+                font-size: 15px;
+            }
+
+            .nav-links
+            {
+                gap: 16px;
+                font-size: 12px;
+            }
+
+            .jukebox
+            {
+                padding: 16px;
+            }
+
+            .record-label > span
+            {
+                font-size: 4px;
+            }
+
+            .record-label strong
+            {
+                font-size: 9px;
+            }
+
+            .controls
+            {
+                gap: 6px;
+            }
+
+            footer
+            {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce)
+        {
+            *,
+            *::before,
+            *::after
+            {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <nav aria-label="Main navigation">
+            <a class="wordmark" href="index.html">Shane McDermott.</a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="sound.html" aria-current="page">Sound</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </nav>
+
+        <header class="page-heading">
+            <p class="eyebrow">COMPOSITIONS / 01—02</p>
+            <h1>Sound.</h1>
+            <p>Pick a record. Drop it in. Let it move.</p>
+        </header>
+
+        <div class="listening-room">
+            <section class="collection" aria-labelledby="collection-title">
+                <h2 id="collection-title">
+                    The collection
+                    <span>02 records</span>
+                </h2>
+
+                <div class="records">
+                    <button
+                        class="record-choice"
+                        id="record-young-turks"
+                        draggable="true"
+                        data-src="young-turks.m4a"
+                        data-title="Young Turks"
+                        data-number="01"
+                        aria-label="Play Young Turks, or drag its record into the jukebox"
+                        aria-pressed="false"
+                        type="button"
+                    >
+                        <span class="vinyl" style="--label: #cc694e;" aria-hidden="true">
+                            <span class="record-label">
+                                <span>SHANE MCDERMOTT</span>
+                                <strong>YOUNG<br>TURKS</strong>
+                                <i></i>
+                                <span>SIDE A / 01</span>
+                            </span>
+                        </span>
+
+                        <span class="record-info">
+                            <strong>Young Turks</strong>
+                            <span>01 <span aria-hidden="true">↗</span></span>
+                        </span>
+                    </button>
+
+                    <button
+                        class="record-choice"
+                        id="record-palermo"
+                        draggable="true"
+                        data-src="palermo.m4a"
+                        data-title="Palermo"
+                        data-number="02"
+                        aria-label="Play Palermo, or drag its record into the jukebox"
+                        aria-pressed="false"
+                        type="button"
+                    >
+                        <span class="vinyl" style="--label: #a3b7c3;" aria-hidden="true">
+                            <span class="record-label">
+                                <span>SHANE MCDERMOTT</span>
+                                <strong>PALERMO</strong>
+                                <i></i>
+                                <span>SIDE A / 02</span>
+                            </span>
+                        </span>
+
+                        <span class="record-info">
+                            <strong>Palermo</strong>
+                            <span>02 <span aria-hidden="true">↗</span></span>
+                        </span>
+                    </button>
+                </div>
+
+                <p class="collection-hint">
+                    Drag a disc into the slot, or click to play.
+                </p>
+            </section>
+
+            <section
+                class="jukebox"
+                id="jukebox"
+                aria-labelledby="jukebox-title"
+            >
+                <div class="machine-heading">
+                    <h2 id="jukebox-title">JUKEBOX</h2>
+
+                    <span class="machine-state">
+                        <i id="state-light"></i>
+                        <span id="state-text">STANDBY</span>
+                    </span>
+                </div>
+
+                <div class="display">
+                    <canvas id="lights" aria-hidden="true"></canvas>
+
+                    <div class="empty-display" id="empty-display">
+                        <span class="empty-orbit" aria-hidden="true"></span>
+                        <p>Your next listen<br>starts here.</p>
+                    </div>
+                </div>
+
+                <div class="now-playing">
+                    <span class="eyebrow" id="playing-label">
+                        NO RECORD LOADED
+                    </span>
+
+                    <h3 id="now-title">Choose your sound.</h3>
+                </div>
+
+                <div
+                    class="slot"
+                    id="drop-zone"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Record slot. Press Enter to play the first record, or drag a record here."
+                >
+                    <span class="slot-line" aria-hidden="true"></span>
+                    <span id="slot-text">DROP A RECORD HERE ↓</span>
+                </div>
+
+                <div class="controls">
+                    <div class="playback-buttons">
+                        <button id="pause" type="button" disabled>
+                            Pause
+                        </button>
+
+                        <button id="eject" type="button" disabled>
+                            Eject ↗
+                        </button>
+                    </div>
+
+                    <label>
+                        <input id="gentle" type="checkbox">
+                        Gentle visuals
+                    </label>
+                </div>
+
+                <p id="status" role="status" aria-live="polite"></p>
+            </section>
+        </div>
+
+        <footer>
+            <span>© Shane McDermott</span>
+
+            <a
+                href="https://soundcloud.com/centurycentury"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                More on SoundCloud ↗
+            </a>
+        </footer>
+    </main>
+
+    <audio id="audio" preload="metadata"></audio>
+
+    <script>
+        'use strict';
+
+        const audio = document.querySelector('#audio');
+        const canvas = document.querySelector('#lights');
+        const ctx = canvas.getContext('2d');
+        const trackButtons = [...document.querySelectorAll('.record-choice')];
+        const pause = document.querySelector('#pause');
+        const gentle = document.querySelector('#gentle');
+        const eject = document.querySelector('#eject');
+        const status = document.querySelector('#status');
+        const jukebox = document.querySelector('#jukebox');
+        const dropZone = document.querySelector('#drop-zone');
+        const title = document.querySelector('#now-title');
+        const playingLabel = document.querySelector('#playing-label');
+        const slotText = document.querySelector('#slot-text');
+        const emptyDisplay = document.querySelector('#empty-display');
+        const stateText = document.querySelector('#state-text');
+        const stateLight = document.querySelector('#state-light');
+
+        let selectedButton = null;
+        let active = false;
+        let frame;
+        let last = 0;
+        let w = 0;
+        let h = 0;
+        let session = 0;
+
+        let audioContext;
+        let analyser;
+        let spectrum;
+        let waveform;
+
+        let loudness = 0;
+        let lowEnd = 0;
+        let impact = 0;
+        let baseline = 0;
+
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        gentle.checked = reduced;
+
+        function resize()
+        {
+            const bounds = canvas.getBoundingClientRect();
+
+            w = Math.max(1, bounds.width);
+            h = Math.max(1, bounds.height);
+
+            const ratio = Math.min(devicePixelRatio || 1, 2);
+
+            canvas.width = w * ratio;
+            canvas.height = h * ratio;
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        }
+
+        addEventListener('resize', resize);
+
+        if ('ResizeObserver' in window)
+        {
+            new ResizeObserver(resize).observe(canvas);
+        }
+
+        resize();
+
+        async function connectAudio()
+        {
+            if (!audioContext)
+            {
+                const AudioEngine = window.AudioContext || window.webkitAudioContext;
+
+                audioContext = new AudioEngine();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 2048;
+                analyser.smoothingTimeConstant = 0.55;
+
+                const source = audioContext.createMediaElementSource(audio);
+
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                spectrum = new Uint8Array(analyser.frequencyBinCount);
+                waveform = new Float32Array(analyser.fftSize);
+            }
+
+            await audioContext.resume();
+        }
+
+        function sampleMusic(dt)
+        {
+            if (!analyser || audio.paused)
+            {
+                return;
+            }
+
+            analyser.getByteFrequencyData(spectrum);
+            analyser.getFloatTimeDomainData(waveform);
+
+            let power = 0;
+
+            for (const value of waveform)
+            {
+                power += value * value;
+            }
+
+            const rms = Math.sqrt(power / waveform.length);
+            const spacing = audioContext.sampleRate / analyser.fftSize;
+
+            let bass = 0;
+            let count = 0;
+
+            for (
+                let index = Math.ceil(35 / spacing);
+                index <= Math.floor(180 / spacing);
+                index++
+            )
+            {
+                bass += spectrum[index] / 255;
+                count++;
+            }
+
+            bass /= Math.max(count, 1);
+
+            const volume = Math.min(1, Math.pow(rms * 3.8, 0.8));
+
+            loudness += (volume - loudness)
+                * (1 - Math.exp(-dt * (volume > loudness ? 22 : 5)));
+
+            lowEnd += (bass - lowEnd)
+                * (1 - Math.exp(-dt * (bass > lowEnd ? 24 : 7)));
+
+            const onset = rms > 0.002
+                ? Math.max(0, bass - baseline - 0.035)
+                : 0;
+
+            baseline += (bass - baseline) * (1 - Math.exp(-dt * 2));
+
+            impact = Math.max(
+                impact * Math.exp(-dt * 7),
+                Math.min(1, onset * 3)
+            );
+        }
+
+        function resetResponse()
+        {
+            loudness = 0;
+            lowEnd = 0;
+            impact = 0;
+            baseline = 0;
+
+            if (waveform)
+            {
+                waveform.fill(0);
+            }
+        }
+
+        function readWave(position)
+        {
+            if (!waveform)
+            {
+                return 0;
+            }
+
+            const length = waveform.length;
+            const wrapped = ((position % length) + length) % length;
+            const sample = Math.floor(wrapped);
+            const next = (sample + 1) % length;
+            const fraction = wrapped - sample;
+
+            return waveform[sample] * (1 - fraction)
+                + waveform[next] * fraction;
+        }
+
+        function ringWave(angle, band)
+        {
+            if (!waveform)
+            {
+                return 0;
+            }
+
+            const position = waveform.length * 0.5
+                + Math.cos(angle) * waveform.length * 0.42
+                + band * 19;
+
+            return readWave(position) * 0.6
+                + readWave(position + 4) * 0.2
+                + readWave(position - 4) * 0.2;
+        }
+
+        function renderGraphic(time, volume, bass, hit)
+        {
+            ctx.globalAlpha = 1;
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = '#050507';
+            ctx.fillRect(0, 0, w, h);
+
+            const quiet = gentle.checked;
+            const motion = time * (quiet ? 0.25 : 1);
+            const intensity = quiet ? 0.25 : 1;
+            const unit = Math.min(w, h) * 0.31;
+            const energy = volume * 0.45 + bass * 0.55;
+
+            const pulse = 1 + intensity * (
+                volume * 0.08
+                + bass * 0.12
+                + hit * 0.22
+            );
+
+            const swayX = Math.sin(motion * 1.3)
+                * unit * energy * 0.04 * intensity;
+
+            const swayY = Math.cos(motion * 1.7)
+                * unit * energy * 0.04 * intensity;
+
+            const stretch = Math.sin(motion * 2.4)
+                * energy * 0.045 * intensity;
+
+            const brightness = 0.28 + volume * 0.62;
+            const baseHue = (355 + time * 8) % 360;
+
+            ctx.save();
+            ctx.translate(w / 2 + swayX, h / 2 + swayY);
+            ctx.rotate(Math.sin(motion * 0.8) * energy * 0.12 * intensity);
+            ctx.scale(pulse * (1 + stretch), pulse * (1 - stretch));
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            for (let band = 0; band < 28; band++)
+            {
+                const offset = band / 28;
+                const phase = offset * Math.PI * 2;
+                const hue = (baseHue + (band % 3 === 0 ? 0 : 34)) % 360;
+                const opacity = brightness * (quiet ? 0.75 : 1);
+
+                const ringBounce = Math.sin(motion * 3.5 - phase * 2)
+                    * energy * 0.025 * intensity;
+
+                const ringResponse = 0.65 + offset * 0.9;
+                const waveStrength = quiet ? 0.025 : 0.11;
+
+                ctx.strokeStyle =
+                    `hsla(${hue},85%,${58 + volume * 12}%,${opacity})`;
+
+                ctx.lineWidth = Math.max(1, unit / 140)
+                    + volume * 0.7
+                    + hit * intensity * 1.3;
+
+                ctx.beginPath();
+
+                for (let point = 0; point <= 240; point++)
+                {
+                    const angle = point / 240 * Math.PI * 2;
+                    const wave = ringWave(angle, band);
+
+                    const primaryRipple = (
+                        0.045 + bass * 0.025 * intensity
+                    ) * Math.sin(angle * 7 - motion * 2 + phase);
+
+                    const looseRipple = Math.sin(
+                        angle * 3 + motion * 1.8 - phase
+                    ) * energy * 0.035 * intensity;
+
+                    const impactRipple = Math.sin(
+                        angle * 5 - phase * 2 + motion * 4
+                    ) * hit * 0.035 * intensity;
+
+                    const radius = unit * Math.max(
+                        0.08,
+                        0.2
+                        + offset * 0.85
+                        + ringBounce
+                        + primaryRipple
+                        + looseRipple
+                        + impactRipple
+                        + wave * waveStrength * ringResponse
+                    );
+
+                    const twisted = angle
+                        + motion * 0.2
+                        + Math.sin(angle * 3 - motion)
+                            * (0.06 + hit * 0.045 * intensity)
+                        + Math.sin(motion * 1.4 + phase)
+                            * energy * 0.045 * intensity;
+
+                    const x = radius * Math.cos(twisted);
+                    const y = radius * Math.sin(twisted);
+
+                    if (point === 0)
+                    {
+                        ctx.moveTo(x, y);
+                    }
+                    else
+                    {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            for (let dot = 0; dot < 12; dot++)
+            {
+                const phase = dot / 12 * Math.PI * 2;
+
+                const angle = phase
+                    + motion * 0.4
+                    + Math.sin(motion * 2 + phase)
+                        * energy * 0.12 * intensity;
+
+                const radius = unit * (
+                    1.13
+                    + 0.04 * Math.sin(motion * 3 + dot)
+                    + Math.sin(motion * 4 - phase)
+                        * energy * 0.07 * intensity
+                    + hit * 0.10 * intensity
+                );
+
+                const dotHue = (baseHue + 18) % 360;
+
+                ctx.fillStyle =
+                    `hsla(${dotHue},85%,72%,${0.25 + volume * 0.6})`;
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    radius * Math.cos(angle),
+                    radius * Math.sin(angle),
+                    2 + volume * 3 + hit * intensity * 3,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function updateState(text, playing = false)
+        {
+            stateText.textContent = text;
+            stateLight.classList.toggle('on', playing);
+
+            for (const button of trackButtons)
+            {
+                const selected = button === selectedButton;
+
+                button.setAttribute('aria-pressed', String(selected));
+                button.classList.toggle('spinning', selected && active);
+                button.classList.toggle('is-paused', selected && audio.paused);
+            }
+        }
+
+        function draw(now)
+        {
+            if (!active)
+            {
+                return;
+            }
+
+            const dt = Math.min((now - last) / 1000 || 0.016, 0.05);
+            last = now;
+
+            sampleMusic(dt);
+            renderGraphic(audio.currentTime, loudness, lowEnd, impact);
+
+            frame = requestAnimationFrame(draw);
+        }
+
+        async function enter(button)
+        {
+            const token = ++session;
+
+            cancelAnimationFrame(frame);
+            audio.pause();
+
+            selectedButton = button;
+            active = true;
+            pause.disabled = true;
+            eject.disabled = false;
+            pause.textContent = 'Pause';
+
+            title.textContent = button.dataset.title;
+
+            playingLabel.textContent =
+                `RECORD ${button.dataset.number} / NOW PLAYING`;
+
+            slotText.textContent = 'DROP ANOTHER RECORD TO SWITCH';
+            emptyDisplay.hidden = true;
+            status.textContent = `Loading ${button.dataset.title}…`;
+
+            updateState('LOADING');
+            resetResponse();
+            resize();
+
+            last = 0;
+            frame = requestAnimationFrame(draw);
+
+            try
+            {
+                await connectAudio();
+
+                if (token !== session)
+                {
+                    return;
+                }
+
+                audio.src = button.dataset.src;
+                audio.load();
+
+                await audio.play();
+
+                if (token !== session)
+                {
+                    return;
+                }
+
+                status.textContent = '';
+                pause.disabled = false;
+
+                updateState('PLAYING', true);
+            }
+            catch (error)
+            {
+                if (token !== session)
+                {
+                    return;
+                }
+
+                close(false);
+
+                status.textContent =
+                    `Could not play ${button.dataset.title}. Check that ${button.dataset.src} is alongside sound.html.`;
+            }
+        }
+
+        function close(restoreFocus = true)
+        {
+            session++;
+
+            const previous = selectedButton;
+
+            audio.pause();
+            active = false;
+            selectedButton = null;
+
+            cancelAnimationFrame(frame);
+            resetResponse();
+
+            ctx.clearRect(0, 0, w, h);
+
+            emptyDisplay.hidden = false;
+            title.textContent = 'Choose your sound.';
+            playingLabel.textContent = 'NO RECORD LOADED';
+            slotText.textContent = 'DROP A RECORD HERE ↓';
+
+            pause.disabled = true;
+            eject.disabled = true;
+            pause.textContent = 'Pause';
+            status.textContent = '';
+
+            updateState('STANDBY');
+
+            if (restoreFocus && previous)
+            {
+                previous.focus();
+            }
+        }
+
+        async function toggle()
+        {
+            if (!active || pause.disabled)
+            {
+                return;
+            }
+
+            const token = session;
+
+            if (audio.paused)
+            {
+                pause.disabled = true;
+
+                try
+                {
+                    await connectAudio();
+
+                    if (token !== session)
+                    {
+                        return;
+                    }
+
+                    await audio.play();
+
+                    if (token !== session)
+                    {
+                        return;
+                    }
+
+                    pause.textContent = 'Pause';
+                    updateState('PLAYING', true);
+                }
+                catch (error)
+                {
+                    if (token === session)
+                    {
+                        pause.textContent = 'Retry';
+                        status.textContent =
+                            'Playback could not resume. Try again.';
+                    }
+                }
+                finally
+                {
+                    if (token === session)
+                    {
+                        pause.disabled = false;
+                    }
+                }
+            }
+            else
+            {
+                audio.pause();
+                pause.textContent = 'Resume';
+                updateState('PAUSED');
+            }
+        }
+
+        let dragEndedAt = 0;
+
+        for (const button of trackButtons)
+        {
+            button.addEventListener('click', () =>
+            {
+                if (Date.now() - dragEndedAt > 250)
+                {
+                    enter(button);
+                }
+            });
+
+            button.addEventListener('dragstart', event =>
+            {
+                event.dataTransfer.effectAllowed = 'copy';
+                event.dataTransfer.setData('text/plain', button.id);
+                button.classList.add('dragging');
+            });
+
+            button.addEventListener('dragend', () =>
+            {
+                dragEndedAt = Date.now();
+                button.classList.remove('dragging');
+                jukebox.classList.remove('drag-over');
+            });
+        }
+
+        jukebox.addEventListener('dragover', event =>
+        {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'copy';
+            jukebox.classList.add('drag-over');
+        });
+
+        jukebox.addEventListener('dragleave', event =>
+        {
+            if (!jukebox.contains(event.relatedTarget))
+            {
+                jukebox.classList.remove('drag-over');
+            }
+        });
+
+        jukebox.addEventListener('drop', event =>
+        {
+            event.preventDefault();
+            jukebox.classList.remove('drag-over');
+
+            const id = event.dataTransfer.getData('text/plain');
+            const button = trackButtons.find(item => item.id === id);
+
+            if (button)
+            {
+                for (const record of trackButtons)
+                {
+                    record.classList.remove('dragging');
+                }
+
+                enter(button);
+            }
+            else
+            {
+                status.textContent = 'Choose a record from the collection.';
+            }
+        });
+
+        dropZone.addEventListener('click', () =>
+        {
+            enter(selectedButton || trackButtons[0]);
+        });
+
+        dropZone.addEventListener('keydown', event =>
+        {
+            if (event.key === 'Enter' || event.code === 'Space')
+            {
+                event.preventDefault();
+                enter(selectedButton || trackButtons[0]);
+            }
+        });
+
+        pause.addEventListener('click', toggle);
+        eject.addEventListener('click', () => close());
+        audio.addEventListener('ended', () => close(false));
+
+        audio.addEventListener('error', () =>
+        {
+            if (!active || !selectedButton)
+            {
+                return;
+            }
+
+            const filename = selectedButton.dataset.src;
+
+            close(false);
+
+            status.textContent =
+                `Could not load ${filename}. Check the filename and upload.`;
+        });
+
+        document.addEventListener('keydown', event =>
+        {
+            if (!active)
+            {
+                return;
+            }
+
+            if (event.key === 'Escape')
+            {
+                close();
+            }
+
+            if (
+                event.code === 'Space'
+                && ['BODY', 'CANVAS'].includes(event.target.tagName)
+            )
+            {
+                event.preventDefault();
+                toggle();
+            }
+        });
+    </script>
+</body>
+</html>
