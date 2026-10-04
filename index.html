@@ -8,31 +8,83 @@
   <style>
     :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     * { box-sizing: border-box; }
-    body { margin: 0; color: #181818; background: #fafafa; line-height: 1.6; }
-    main { max-width: 850px; padding: 72px 24px 96px; margin: auto; }
+    html, body { min-height: 100%; }
+    body { margin: 0; color: #181818; background: #fafafa; line-height: 1.6; overflow-x: hidden; }
+    main { max-width: 850px; padding: 72px 24px 96px; margin: auto; transition: opacity .8s ease, filter .8s ease; }
     nav { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-bottom: 110px; }
     a { color: inherit; text-underline-offset: 4px; }
     nav a { text-decoration: none; }
     a:hover { color: #777; }
     h1 { font-size: clamp(44px, 9vw, 82px); letter-spacing: -.065em; line-height: 1.04; margin: 0 0 24px; }
-    .intro { font-size: 21px; max-width: 610px; color: #555; margin-bottom: 110px; }
+    .intro { font-size: 21px; max-width: 610px; color: #555; margin: 0 0 110px; }
     h2 { font-size: 27px; letter-spacing: -.035em; margin: 0 0 28px; }
     section { margin-bottom: 90px; }
     .links { display: flex; flex-wrap: wrap; gap: 20px; }
     footer { color: #888; font-size: 14px; }
-    @media (max-width: 600px) { main { padding-top: 32px; } nav { margin-bottom: 85px; } .intro { margin-bottom: 85px; } }
+
+    .track { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; padding: 22px 0; }
+    .track-copy { min-width: 0; }
+    .track-title { font-size: 19px; font-weight: 600; letter-spacing: -.02em; }
+    .track-meta { color: #777; font-size: 14px; margin-top: 2px; }
+    button { font: inherit; }
+    .play-button { appearance: none; border: 1px solid #181818; background: transparent; color: #181818; border-radius: 999px; min-width: 96px; min-height: 46px; padding: 9px 18px; cursor: pointer; transition: background .2s ease, color .2s ease, transform .2s ease; }
+    .play-button:hover { background: #181818; color: #fafafa; }
+    .play-button:active { transform: scale(.97); }
+    .play-button:focus-visible, .visualizer-button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+    #visualizer { position: fixed; inset: 0; z-index: 50; background: #000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 1s ease, visibility 0s linear 1s; overflow: hidden; }
+    #visualizer.active { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 1s ease; }
+    #visualizer canvas { width: 100%; height: 100%; display: block; }
+    .visualizer-ui { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+    .visualizer-top { position: absolute; top: 22px; left: 22px; right: 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: rgba(255,255,255,.72); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .visualizer-title { opacity: 0; transition: opacity 1.2s ease .45s; }
+    #visualizer.active .visualizer-title { opacity: 1; }
+    .visualizer-controls { display: flex; gap: 10px; pointer-events: auto; }
+    .visualizer-button { appearance: none; border: 1px solid rgba(255,255,255,.34); background: rgba(0,0,0,.18); color: rgba(255,255,255,.82); border-radius: 999px; min-height: 42px; padding: 8px 15px; cursor: pointer; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .visualizer-button:hover { border-color: rgba(255,255,255,.75); color: #fff; }
+    .hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.32); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: 0; transition: opacity 1s ease 1s; white-space: nowrap; }
+    #visualizer.active .hint { opacity: 1; }
+
+    body.listening main { opacity: 0; filter: blur(10px); pointer-events: none; }
+
+    @media (max-width: 600px) {
+      main { padding-top: 32px; }
+      nav { margin-bottom: 85px; }
+      .intro { margin-bottom: 85px; }
+      .track { align-items: flex-start; }
+      .visualizer-top { top: 16px; left: 16px; right: 16px; }
+      .visualizer-title { max-width: 42%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      main, #visualizer, .visualizer-title, .hint { transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
   <main>
     <nav aria-label="Main navigation">
+      <a href="#music">Music</a>
       <a href="#contact">Contact</a>
       <a href="resume.pdf" download="Shane_McDermott_Resume.pdf">Resume</a>
     </nav>
+
     <header>
       <h1>Shane McDermott.</h1>
-      <p class="intro"><p>I am passionate about creating.</p>
+      <p class="intro">I am passionate about creating.</p>
     </header>
+
+    <section id="music">
+      <h2>Music</h2>
+      <div class="track">
+        <div class="track-copy">
+          <div class="track-title">Young Turks</div>
+          <div class="track-meta">Shane McDermott</div>
+        </div>
+        <button class="play-button" id="playTrack" type="button" aria-label="Play Young Turks">▶ Play</button>
+      </div>
+    </section>
+
     <section id="contact">
       <h2>Find me</h2>
       <div class="links">
@@ -42,7 +94,213 @@
         <a href="https://github.com/shanemcder" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
     </section>
+
     <footer>© Shane McDermott</footer>
   </main>
+
+  <div id="visualizer" aria-hidden="true">
+    <canvas id="visualizerCanvas"></canvas>
+    <div class="visualizer-ui">
+      <div class="visualizer-top">
+        <div class="visualizer-title">Young Turks — Shane McDermott</div>
+        <div class="visualizer-controls">
+          <button class="visualizer-button" id="pauseTrack" type="button">Pause</button>
+          <button class="visualizer-button" id="exitVisualizer" type="button">Exit</button>
+        </div>
+      </div>
+      <div class="hint">Color generated by the music</div>
+    </div>
+  </div>
+
+  <audio id="audio" preload="metadata" src="Young Turks WAV.wav"></audio>
+
+  <script>
+    const playButton = document.getElementById('playTrack');
+    const pauseButton = document.getElementById('pauseTrack');
+    const exitButton = document.getElementById('exitVisualizer');
+    const visualizer = document.getElementById('visualizer');
+    const canvas = document.getElementById('visualizerCanvas');
+    const ctx = canvas.getContext('2d');
+    const audio = document.getElementById('audio');
+
+    let audioContext;
+    let analyser;
+    let source;
+    let frequencyData;
+    let animationFrame;
+    let running = false;
+    let smoothedBass = 0;
+    let smoothedMid = 0;
+    let smoothedHigh = 0;
+    let smoothedLevel = 0;
+    let lastBeat = 0;
+    let beatEnergy = 0;
+    let hueOffset = 0;
+
+    const blobs = Array.from({ length: 6 }, (_, i) => ({
+      x: 0.16 + ((i * 0.173) % 0.7),
+      y: 0.18 + ((i * 0.257) % 0.64),
+      driftX: 0.00018 + i * 0.000025,
+      driftY: 0.00012 + i * 0.00002,
+      phase: i * 1.17
+    }));
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function setupAudio() {
+      if (audioContext) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContext();
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+      analyser.smoothingTimeConstant = 0.78;
+      source = audioContext.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+      frequencyData = new Uint8Array(analyser.frequencyBinCount);
+    }
+
+    function averageRange(minHz, maxHz) {
+      const nyquist = audioContext.sampleRate / 2;
+      const start = Math.max(0, Math.floor(minHz / nyquist * frequencyData.length));
+      const end = Math.min(frequencyData.length - 1, Math.ceil(maxHz / nyquist * frequencyData.length));
+      if (end <= start) return 0;
+      let sum = 0;
+      for (let i = start; i <= end; i++) sum += frequencyData[i];
+      return (sum / (end - start + 1)) / 255;
+    }
+
+    function drawBlob(x, y, radius, hue, saturation, lightness, alpha) {
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+      gradient.addColorStop(0, `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`);
+      gradient.addColorStop(0.24, `hsla(${(hue + 18) % 360}, ${saturation}%, ${lightness}%, ${alpha * .72})`);
+      gradient.addColorStop(0.58, `hsla(${(hue + 42) % 360}, ${Math.max(45, saturation - 15)}%, ${Math.max(32, lightness - 8)}%, ${alpha * .25})`);
+      gradient.addColorStop(1, `hsla(${hue}, ${saturation}%, ${lightness}%, 0)`);
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function render(time) {
+      if (!running) return;
+      animationFrame = requestAnimationFrame(render);
+      analyser.getByteFrequencyData(frequencyData);
+
+      const bass = averageRange(35, 180);
+      const mid = averageRange(180, 2200);
+      const high = averageRange(2200, 11000);
+      const level = bass * .45 + mid * .38 + high * .17;
+
+      smoothedBass += (bass - smoothedBass) * .16;
+      smoothedMid += (mid - smoothedMid) * .10;
+      smoothedHigh += (high - smoothedHigh) * .14;
+      smoothedLevel += (level - smoothedLevel) * .10;
+
+      const now = performance.now();
+      if (bass > smoothedBass * 1.16 && bass > .22 && now - lastBeat > 170) {
+        beatEnergy = Math.min(1, beatEnergy + .62);
+        lastBeat = now;
+        hueOffset = (hueOffset + 23 + high * 34) % 360;
+      }
+      beatEnergy *= .92;
+
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(0,0,0,.24)';
+      ctx.fillRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'screen';
+
+      const baseHue = (205 + hueOffset + audio.currentTime * 2.4) % 360;
+      blobs.forEach((blob, i) => {
+        const motion = time * (0.00017 + i * 0.000018);
+        const x = width * (blob.x + Math.sin(motion + blob.phase) * (.055 + smoothedMid * .05));
+        const y = height * (blob.y + Math.cos(motion * .83 + blob.phase) * (.07 + smoothedHigh * .045));
+        const band = i % 3 === 0 ? smoothedBass : i % 3 === 1 ? smoothedMid : smoothedHigh;
+        const pulse = 1 + beatEnergy * (i % 2 === 0 ? .48 : .22);
+        const radius = Math.min(width, height) * (.20 + band * .38) * pulse;
+        const hue = (baseHue + i * 52 + smoothedHigh * 70) % 360;
+        const alpha = Math.min(.64, .055 + band * .35 + smoothedLevel * .12 + beatEnergy * .08);
+        drawBlob(x, y, radius, hue, 82, 56 + band * 13, alpha);
+      });
+
+      if (beatEnergy > .08) {
+        const flash = ctx.createRadialGradient(width * .5, height * .5, 0, width * .5, height * .5, Math.max(width, height) * .72);
+        flash.addColorStop(0, `hsla(${(baseHue + 115) % 360}, 90%, 64%, ${beatEnergy * .065})`);
+        flash.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = flash;
+        ctx.fillRect(0, 0, width, height);
+      }
+    }
+
+    async function enterVisualizer() {
+      setupAudio();
+      if (audioContext.state === 'suspended') await audioContext.resume();
+      document.body.classList.add('listening');
+      visualizer.classList.add('active');
+      visualizer.setAttribute('aria-hidden', 'false');
+      resizeCanvas();
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+      try {
+        await audio.play();
+        pauseButton.textContent = 'Pause';
+        if (!running) {
+          running = true;
+          animationFrame = requestAnimationFrame(render);
+        }
+      } catch (error) {
+        exitVisualizer();
+        console.error('Audio playback failed:', error);
+      }
+    }
+
+    function exitVisualizer() {
+      audio.pause();
+      audio.currentTime = 0;
+      running = false;
+      cancelAnimationFrame(animationFrame);
+      visualizer.classList.remove('active');
+      visualizer.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('listening');
+      playButton.textContent = '▶ Play';
+      pauseButton.textContent = 'Pause';
+      smoothedBass = smoothedMid = smoothedHigh = smoothedLevel = beatEnergy = 0;
+    }
+
+    async function togglePause() {
+      if (audio.paused) {
+        if (audioContext && audioContext.state === 'suspended') await audioContext.resume();
+        await audio.play();
+        pauseButton.textContent = 'Pause';
+      } else {
+        audio.pause();
+        pauseButton.textContent = 'Play';
+      }
+    }
+
+    playButton.addEventListener('click', enterVisualizer);
+    pauseButton.addEventListener('click', togglePause);
+    exitButton.addEventListener('click', exitVisualizer);
+    audio.addEventListener('ended', exitVisualizer);
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('keydown', (event) => {
+      if (!visualizer.classList.contains('active')) return;
+      if (event.key === 'Escape') exitVisualizer();
+      if (event.code === 'Space' && event.target.tagName !== 'BUTTON') {
+        event.preventDefault();
+        togglePause();
+      }
+    });
+  </script>
 </body>
 </html>
