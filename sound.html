@@ -3,16 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Sound by Shane McDermott. Pick a record and listen.">
+    <meta name="description" content="Sound by Shane McDermott.">
     <title>Sound — Shane McDermott</title>
 
     <style>
         :root
         {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color-scheme: dark;
-            --muted: #85858b;
-            --ink: #eeeeef;
+            color-scheme: light;
         }
 
         *
@@ -23,146 +21,92 @@
         body
         {
             margin: 0;
-            background: #111112;
-            color: var(--ink);
-            line-height: 1.5;
+            color: #181818;
+            background: #fafafa;
+            line-height: 1.6;
+        }
+
+        body.listening
+        {
+            overflow: hidden;
         }
 
         main
         {
-            max-width: 1240px;
+            max-width: 850px;
+            padding: 72px 24px 96px;
             margin: auto;
-            padding: 42px 40px 30px;
-        }
-
-        a
-        {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        a:hover
-        {
-            color: #bbb;
         }
 
         nav
         {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 110px;
         }
 
-        .wordmark
+        a
         {
-            font-size: 17px;
-            font-weight: 600;
-            letter-spacing: -0.04em;
+            color: inherit;
+            text-underline-offset: 4px;
         }
 
-        .nav-links
+        nav a
         {
-            display: flex;
-            gap: 28px;
-            font-size: 14px;
-            color: var(--muted);
+            text-decoration: none;
         }
 
-        .nav-links [aria-current]
+        nav a[aria-current]
         {
-            color: var(--ink);
             text-decoration: underline;
-            text-underline-offset: 7px;
+            text-underline-offset: 6px;
         }
 
-        .page-heading
+        a:hover
         {
-            margin: 74px 0 52px;
-        }
-
-        .eyebrow
-        {
-            margin: 0;
-            font-size: 10px;
-            letter-spacing: 0.15em;
-            color: var(--muted);
-            font-weight: 500;
+            color: #777;
         }
 
         h1
         {
-            margin: 12px 0 14px;
-            font-size: clamp(60px, 9vw, 102px);
+            font-size: clamp(44px, 9vw, 82px);
             letter-spacing: -0.065em;
-            line-height: 1;
-            font-weight: 500;
-        }
-
-        .page-heading > p:last-child
-        {
-            margin: 0;
-            font-size: 17px;
-            color: #a3a3a8;
-        }
-
-        .listening-room
-        {
-            display: grid;
-            grid-template-columns: 1fr 1.05fr;
-            gap: 48px;
-            align-items: start;
-        }
-
-        h2
-        {
-            margin: 0;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .collection > h2
-        {
-            display: flex;
-            justify-content: space-between;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #303033;
-        }
-
-        .collection > h2 > span
-        {
-            color: var(--muted);
-            font-size: 11px;
+            line-height: 1.04;
+            margin: 0 0 64px;
         }
 
         .records
         {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 22px;
-            margin-top: 32px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 64px;
+            max-width: 660px;
+            margin-bottom: 100px;
         }
 
         button
         {
             font: inherit;
-            color: inherit;
             cursor: pointer;
         }
 
-        .record-choice
+        .record
         {
+            display: block;
+            width: 100%;
             border: 0;
-            background: none;
             padding: 0;
+            background: transparent;
+            color: inherit;
             text-align: left;
-            cursor: grab;
-            min-width: 0;
         }
 
-        .record-choice:active
+        .record:disabled
         {
-            cursor: grabbing;
+            cursor: wait;
+            opacity: 0.6;
         }
 
         .vinyl
@@ -178,12 +122,12 @@
                 circle at center,
                 #161618 0px,
                 #161618 2px,
-                #28282a 3px,
+                #29292b 3px,
                 #101012 4px
             );
-            border: 1px solid #39393d;
-            box-shadow: 0 12px 24px #0005;
-            transition: transform 0.4s;
+            border: 1px solid #303033;
+            box-shadow: 0 14px 30px #00000018;
+            transition: transform 0.4s, box-shadow 0.4s;
         }
 
         .vinyl::before
@@ -194,39 +138,39 @@
             border-radius: 50%;
             background: conic-gradient(
                 from 30deg,
-                transparent 0deg,
-                #ffffff0b 50deg,
+                transparent,
+                #ffffff0e 50deg,
                 transparent 90deg,
                 transparent 180deg,
-                #ffffff0d 230deg,
+                #ffffff12 230deg,
                 transparent 280deg
             );
         }
 
         .record-label
         {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-evenly;
-            width: 45%;
-            height: 45%;
+            width: 44%;
+            height: 44%;
+            padding: 12px 4px;
             border-radius: 50%;
             background: var(--label);
-            color: #151515;
-            padding: 9% 1%;
-            z-index: 1;
+            color: #181818;
         }
 
-        .record-label > span
+        .record-label small
         {
-            font-size: clamp(4px, 0.48vw, 7px);
+            font-size: clamp(5px, 0.8vw, 8px);
             letter-spacing: 0.08em;
         }
 
         .record-label strong
         {
-            font-size: clamp(8px, 0.95vw, 13px);
+            font-size: clamp(10px, 1.6vw, 17px);
             text-align: center;
             letter-spacing: -0.04em;
             line-height: 1.05;
@@ -234,405 +178,180 @@
 
         .record-label i
         {
-            background: #161618;
-            border: 2px solid #ffffff44;
-            width: 8px;
-            height: 8px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
+            background: #161618;
+            border: 2px solid #ffffff55;
         }
 
         .record-info
         {
             display: flex;
             justify-content: space-between;
-            gap: 8px;
-            margin-top: 20px;
-            font-size: 13px;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .record-info strong
         {
+            font-size: 16px;
             font-weight: 500;
         }
 
         .record-info > span
         {
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        .record-info > span > span
-        {
-            margin-left: 8px;
-        }
-
-        .record-choice:hover .vinyl
-        {
-            transform: translateY(-5px) rotate(-8deg);
-        }
-
-        .record-choice[aria-pressed="true"] .record-info strong
-        {
-            color: #fff;
-            text-decoration: underline;
-            text-underline-offset: 5px;
-        }
-
-        .record-choice.spinning .vinyl
-        {
-            animation: spin 14s linear infinite;
-        }
-
-        .record-choice.is-paused .vinyl
-        {
-            animation-play-state: paused;
-        }
-
-        .record-choice.dragging
-        {
-            opacity: 0.4;
-        }
-
-        .collection-hint
-        {
-            margin: 32px 0 0;
-            color: var(--muted);
             font-size: 12px;
+            color: #888;
         }
 
-        .jukebox
+        .record:hover .vinyl
         {
-            border: 1px solid #39393d;
-            border-radius: 15px;
-            padding: 22px;
-            background: linear-gradient(140deg, #232325, #19191b 65%);
-            box-shadow: 0 24px 64px #0003;
-            transition: border-color 0.25s, transform 0.25s;
+            transform: translateY(-7px) rotate(-10deg);
+            box-shadow: 0 20px 40px #00000022;
         }
 
-        .machine-heading
+        #status
         {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
+            min-height: 24px;
+            font-size: 14px;
+            color: #777;
         }
 
-        .machine-heading h2
+        footer
         {
-            font-size: 10px;
-            letter-spacing: 0.18em;
+            color: #888;
+            font-size: 14px;
         }
 
-        .machine-state
+        #experience
         {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 9px;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-        }
-
-        .machine-state i
-        {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #707076;
-        }
-
-        .machine-state i.on
-        {
-            background: #b9d1b6;
-            box-shadow: 0 0 7px #b9d1b644;
-        }
-
-        .display
-        {
-            position: relative;
-            aspect-ratio: 1.5;
-            border: 1px solid #36363a;
-            border-radius: 8px;
-            overflow: hidden;
+            position: fixed;
+            inset: 0;
             background: #050507;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s, visibility 1s;
+            z-index: 10;
+            color: #fff;
+            color-scheme: dark;
+        }
+
+        #experience.open
+        {
+            opacity: 1;
+            visibility: visible;
         }
 
         canvas
         {
-            position: absolute;
-            inset: 0;
             width: 100%;
             height: 100%;
             display: block;
         }
 
-        .empty-display
+        .caption
         {
             position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            color: #707078;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        .empty-display p
-        {
-            font-size: 13px;
-            margin: 0;
-        }
-
-        .empty-orbit
-        {
-            display: block;
-            width: 64px;
-            height: 64px;
-            border: 1px solid #33333a;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .empty-orbit::before,
-        .empty-orbit::after
-        {
-            content: "";
-            position: absolute;
-            border: 1px solid #292930;
-            border-radius: 50%;
-            inset: 8px;
-        }
-
-        .empty-orbit::after
-        {
-            inset: 16px;
-        }
-
-        .empty-display[hidden]
-        {
-            display: none;
-        }
-
-        .now-playing
-        {
-            margin: 22px 0;
-        }
-
-        .now-playing h3
-        {
-            font-size: 21px;
-            font-weight: 500;
-            letter-spacing: -0.04em;
-            margin: 5px 0 0;
-        }
-
-        .slot
-        {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            padding: 19px 18px;
-            border: 1px dashed #4b4b51;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .slot-line
-        {
-            height: 7px;
-            width: 75%;
-            background: #080809;
-            border-radius: 5px;
-            border-top: 1px solid #000;
-            box-shadow: 0 1px 0 #ffffff15;
-        }
-
-        #slot-text
-        {
-            font-size: 9px;
+            top: 28px;
+            left: 28px;
+            font-size: 12px;
             letter-spacing: 0.14em;
-            color: #aaaab0;
+            color: #999;
         }
 
-        .jukebox.drag-over
+        .exit
         {
-            border-color: #c5c5cd;
-            transform: translateY(-3px);
-        }
-
-        .jukebox.drag-over .slot
-        {
-            background: #ffffff08;
-            border-color: #d4d4dc;
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            color: #ccc;
+            border: 1px solid #444;
+            border-radius: 30px;
+            padding: 10px 24px;
+            background: transparent;
         }
 
         .controls
         {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            margin-top: 21px;
-        }
-
-        .playback-buttons
-        {
-            display: flex;
-            gap: 8px;
+            gap: 16px;
+            color: #bbb;
+            font-size: 13px;
         }
 
         .controls button
         {
-            padding: 7px 13px;
-            border: 1px solid #4a4a50;
-            border-radius: 24px;
+            color: #ddd;
+            border: 1px solid #444;
+            border-radius: 30px;
+            padding: 7px 16px;
             background: transparent;
-            font-size: 11px;
         }
 
         .controls button:disabled
         {
-            opacity: 0.35;
-            cursor: default;
+            opacity: 0.4;
+            cursor: wait;
         }
 
         .controls label
         {
             display: flex;
-            gap: 6px;
             align-items: center;
-            font-size: 10px;
-            color: #aaaab0;
+            gap: 6px;
             white-space: nowrap;
         }
 
-        .controls input
+        #gentle
         {
-            accent-color: #b7b7c7;
-        }
-
-        #status
-        {
-            min-height: 17px;
-            color: #b0b0b6;
-            font-size: 11px;
-            margin: 14px 0 0;
-        }
-
-        footer
-        {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            margin-top: 70px;
-            padding-top: 22px;
-            border-top: 1px solid #29292d;
-            font-size: 11px;
-            color: var(--muted);
+            accent-color: #b2a4cd;
         }
 
         button:focus-visible,
         a:focus-visible,
-        input:focus-visible,
-        .slot:focus-visible
+        input:focus-visible
         {
-            outline: 2px solid #c4b8e3;
+            outline: 2px solid #a58aff;
             outline-offset: 6px;
         }
 
-        @keyframes spin
-        {
-            to
-            {
-                transform: rotate(360deg);
-            }
-        }
-
-        @media (max-width: 800px)
+        @media (max-width: 600px)
         {
             main
             {
-                padding: 28px 24px;
-            }
-
-            .listening-room
-            {
-                grid-template-columns: 1fr;
-                gap: 38px;
-            }
-
-            .page-heading
-            {
-                margin: 60px 0 38px;
-            }
-
-            .records
-            {
-                max-width: 460px;
-                margin: 26px auto 0;
-                gap: 28px;
-            }
-
-            .record-label > span
-            {
-                font-size: 6px;
-            }
-
-            .record-label strong
-            {
-                font-size: 12px;
-            }
-
-            .collection-hint
-            {
-                text-align: center;
-            }
-
-            .jukebox
-            {
-                max-width: 600px;
-                width: 100%;
-                margin: auto;
-            }
-        }
-
-        @media (max-width: 440px)
-        {
-            main
-            {
-                padding: 24px 18px;
+                padding-top: 32px;
             }
 
             nav
             {
-                align-items: flex-start;
-                gap: 14px;
+                margin-bottom: 85px;
             }
 
-            .wordmark
+            h1
             {
-                max-width: 105px;
-                font-size: 15px;
+                margin-bottom: 48px;
             }
 
-            .nav-links
+            .records
             {
-                gap: 16px;
-                font-size: 12px;
+                gap: 24px;
+                margin-bottom: 70px;
             }
 
-            .jukebox
+            .record-label
             {
-                padding: 16px;
+                padding: 7px 2px;
             }
 
-            .record-label > span
+            .record-label small
             {
                 font-size: 4px;
             }
@@ -642,189 +361,138 @@
                 font-size: 9px;
             }
 
-            .controls
+            .record-info
             {
                 gap: 6px;
+                margin-top: 18px;
             }
 
-            footer
+            .record-info strong
             {
-                flex-wrap: wrap;
+                font-size: 14px;
+            }
+
+            .record-info > span
+            {
+                font-size: 10px;
+            }
+
+            .controls
+            {
+                left: 16px;
+                right: 16px;
+            }
+
+            .caption
+            {
+                left: 20px;
             }
         }
 
         @media (prefers-reduced-motion: reduce)
         {
-            *,
-            *::before,
-            *::after
+            .vinyl
             {
-                animation: none !important;
-                transition: none !important;
+                transition: none;
+            }
+
+            #experience
+            {
+                transition-duration: 0.2s;
             }
         }
     </style>
 </head>
 
 <body>
-    <main>
+    <main id="portfolio">
         <nav aria-label="Main navigation">
-            <a class="wordmark" href="index.html">Shane McDermott.</a>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="sound.html" aria-current="page">Sound</a>
-                <a href="index.html#contact">Contact</a>
-            </div>
+            <a href="index.html">Home</a>
+            <a href="sound.html" aria-current="page">Sound</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="resume.pdf" download="Shane_McDermott_Resume.pdf">
+                Resume
+            </a>
         </nav>
 
-        <header class="page-heading">
-            <p class="eyebrow">COMPOSITIONS / 01—02</p>
+        <header>
             <h1>Sound.</h1>
-            <p>Pick a record. Drop it in. Let it move.</p>
         </header>
 
-        <div class="listening-room">
-            <section class="collection" aria-labelledby="collection-title">
-                <h2 id="collection-title">
-                    The collection
-                    <span>02 records</span>
-                </h2>
-
-                <div class="records">
-                    <button
-                        class="record-choice"
-                        id="record-young-turks"
-                        draggable="true"
-                        data-src="young-turks.m4a"
-                        data-title="Young Turks"
-                        data-number="01"
-                        aria-label="Play Young Turks, or drag its record into the jukebox"
-                        aria-pressed="false"
-                        type="button"
-                    >
-                        <span class="vinyl" style="--label: #cc694e;" aria-hidden="true">
-                            <span class="record-label">
-                                <span>SHANE MCDERMOTT</span>
-                                <strong>YOUNG<br>TURKS</strong>
-                                <i></i>
-                                <span>SIDE A / 01</span>
-                            </span>
-                        </span>
-
-                        <span class="record-info">
-                            <strong>Young Turks</strong>
-                            <span>01 <span aria-hidden="true">↗</span></span>
-                        </span>
-                    </button>
-
-                    <button
-                        class="record-choice"
-                        id="record-palermo"
-                        draggable="true"
-                        data-src="palermo.m4a"
-                        data-title="Palermo"
-                        data-number="02"
-                        aria-label="Play Palermo, or drag its record into the jukebox"
-                        aria-pressed="false"
-                        type="button"
-                    >
-                        <span class="vinyl" style="--label: #a3b7c3;" aria-hidden="true">
-                            <span class="record-label">
-                                <span>SHANE MCDERMOTT</span>
-                                <strong>PALERMO</strong>
-                                <i></i>
-                                <span>SIDE A / 02</span>
-                            </span>
-                        </span>
-
-                        <span class="record-info">
-                            <strong>Palermo</strong>
-                            <span>02 <span aria-hidden="true">↗</span></span>
-                        </span>
-                    </button>
-                </div>
-
-                <p class="collection-hint">
-                    Drag a disc into the slot, or click to play.
-                </p>
-            </section>
-
-            <section
-                class="jukebox"
-                id="jukebox"
-                aria-labelledby="jukebox-title"
+        <section class="records" aria-label="Choose a track">
+            <button
+                class="record"
+                type="button"
+                data-src="young-turks.m4a"
+                data-title="Young Turks"
+                aria-label="Play Young Turks"
             >
-                <div class="machine-heading">
-                    <h2 id="jukebox-title">JUKEBOX</h2>
-
-                    <span class="machine-state">
-                        <i id="state-light"></i>
-                        <span id="state-text">STANDBY</span>
+                <span class="vinyl" style="--label: #cc694e;" aria-hidden="true">
+                    <span class="record-label">
+                        <small>SHANE MCDERMOTT</small>
+                        <strong>YOUNG<br>TURKS</strong>
+                        <i></i>
+                        <small>SIDE A / 01</small>
                     </span>
-                </div>
+                </span>
 
-                <div class="display">
-                    <canvas id="lights" aria-hidden="true"></canvas>
+                <span class="record-info">
+                    <strong>Young Turks</strong>
+                    <span>▶ Play</span>
+                </span>
+            </button>
 
-                    <div class="empty-display" id="empty-display">
-                        <span class="empty-orbit" aria-hidden="true"></span>
-                        <p>Your next listen<br>starts here.</p>
-                    </div>
-                </div>
-
-                <div class="now-playing">
-                    <span class="eyebrow" id="playing-label">
-                        NO RECORD LOADED
-                    </span>
-
-                    <h3 id="now-title">Choose your sound.</h3>
-                </div>
-
-                <div
-                    class="slot"
-                    id="drop-zone"
-                    tabindex="0"
-                    role="button"
-                    aria-label="Record slot. Press Enter to play the first record, or drag a record here."
-                >
-                    <span class="slot-line" aria-hidden="true"></span>
-                    <span id="slot-text">DROP A RECORD HERE ↓</span>
-                </div>
-
-                <div class="controls">
-                    <div class="playback-buttons">
-                        <button id="pause" type="button" disabled>
-                            Pause
-                        </button>
-
-                        <button id="eject" type="button" disabled>
-                            Eject ↗
-                        </button>
-                    </div>
-
-                    <label>
-                        <input id="gentle" type="checkbox">
-                        Gentle visuals
-                    </label>
-                </div>
-
-                <p id="status" role="status" aria-live="polite"></p>
-            </section>
-        </div>
-
-        <footer>
-            <span>© Shane McDermott</span>
-
-            <a
-                href="https://soundcloud.com/centurycentury"
-                target="_blank"
-                rel="noopener noreferrer"
+            <button
+                class="record"
+                type="button"
+                data-src="palermo.m4a"
+                data-title="Palermo"
+                aria-label="Play Palermo"
             >
-                More on SoundCloud ↗
-            </a>
-        </footer>
+                <span class="vinyl" style="--label: #a3b7c3;" aria-hidden="true">
+                    <span class="record-label">
+                        <small>SHANE MCDERMOTT</small>
+                        <strong>PALERMO</strong>
+                        <i></i>
+                        <small>SIDE A / 02</small>
+                    </span>
+                </span>
+
+                <span class="record-info">
+                    <strong>Palermo</strong>
+                    <span>▶ Play</span>
+                </span>
+            </button>
+        </section>
+
+        <p id="status" role="status" aria-live="polite"></p>
+        <footer>© Shane McDermott</footer>
     </main>
+
+    <div
+        id="experience"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Audiovisual player"
+        aria-hidden="true"
+    >
+        <canvas id="lights" aria-hidden="true"></canvas>
+
+        <div class="caption">YOUNG TURKS</div>
+
+        <button class="exit" id="exit" type="button">
+            Exit ↗
+        </button>
+
+        <div class="controls">
+            <button id="pause" type="button" disabled>Pause</button>
+
+            <label>
+                <input id="gentle" type="checkbox">
+                Gentle visuals
+            </label>
+        </div>
+    </div>
 
     <audio id="audio" preload="metadata"></audio>
 
@@ -832,29 +500,27 @@
         'use strict';
 
         const audio = document.querySelector('#audio');
+        const stage = document.querySelector('#experience');
         const canvas = document.querySelector('#lights');
         const ctx = canvas.getContext('2d');
-        const trackButtons = [...document.querySelectorAll('.record-choice')];
+        const trackButtons = [...document.querySelectorAll('.record')];
         const pause = document.querySelector('#pause');
         const gentle = document.querySelector('#gentle');
-        const eject = document.querySelector('#eject');
+        const portfolio = document.querySelector('#portfolio');
+        const exit = document.querySelector('#exit');
         const status = document.querySelector('#status');
-        const jukebox = document.querySelector('#jukebox');
-        const dropZone = document.querySelector('#drop-zone');
-        const title = document.querySelector('#now-title');
-        const playingLabel = document.querySelector('#playing-label');
-        const slotText = document.querySelector('#slot-text');
-        const emptyDisplay = document.querySelector('#empty-display');
-        const stateText = document.querySelector('#state-text');
-        const stateLight = document.querySelector('#state-light');
+        const caption = document.querySelector('.caption');
 
-        let selectedButton = null;
+        let selectedButton = trackButtons[0];
         let active = false;
+        let starting = false;
         let frame;
         let last = 0;
         let w = 0;
         let h = 0;
         let session = 0;
+        let fadeTimer;
+        let startTimer;
 
         let audioContext;
         let analyser;
@@ -871,10 +537,8 @@
 
         function resize()
         {
-            const bounds = canvas.getBoundingClientRect();
-
-            w = Math.max(1, bounds.width);
-            h = Math.max(1, bounds.height);
+            w = innerWidth;
+            h = innerHeight;
 
             const ratio = Math.min(devicePixelRatio || 1, 2);
 
@@ -884,12 +548,6 @@
         }
 
         addEventListener('resize', resize);
-
-        if ('ResizeObserver' in window)
-        {
-            new ResizeObserver(resize).observe(canvas);
-        }
-
         resize();
 
         async function connectAudio()
@@ -913,6 +571,19 @@
             }
 
             await audioContext.resume();
+        }
+
+        function resetResponse()
+        {
+            loudness = 0;
+            lowEnd = 0;
+            impact = 0;
+            baseline = 0;
+
+            if (waveform)
+            {
+                waveform.fill(0);
+            }
         }
 
         function sampleMusic(dt)
@@ -968,19 +639,6 @@
                 impact * Math.exp(-dt * 7),
                 Math.min(1, onset * 3)
             );
-        }
-
-        function resetResponse()
-        {
-            loudness = 0;
-            lowEnd = 0;
-            impact = 0;
-            baseline = 0;
-
-            if (waveform)
-            {
-                waveform.fill(0);
-            }
         }
 
         function readWave(position)
@@ -1166,21 +824,6 @@
             ctx.restore();
         }
 
-        function updateState(text, playing = false)
-        {
-            stateText.textContent = text;
-            stateLight.classList.toggle('on', playing);
-
-            for (const button of trackButtons)
-            {
-                const selected = button === selectedButton;
-
-                button.setAttribute('aria-pressed', String(selected));
-                button.classList.toggle('spinning', selected && active);
-                button.classList.toggle('is-paused', selected && audio.paused);
-            }
-        }
-
         function draw(now)
         {
             if (!active)
@@ -1197,34 +840,30 @@
             frame = requestAnimationFrame(draw);
         }
 
+        function lockButtons(locked)
+        {
+            for (const button of trackButtons)
+            {
+                button.disabled = locked;
+            }
+        }
+
         async function enter(button)
         {
+            if (starting || active)
+            {
+                return;
+            }
+
             const token = ++session;
 
-            cancelAnimationFrame(frame);
-            audio.pause();
-
             selectedButton = button;
-            active = true;
-            pause.disabled = true;
-            eject.disabled = false;
-            pause.textContent = 'Pause';
+            starting = true;
+            lockButtons(true);
+            clearTimeout(fadeTimer);
+            clearTimeout(startTimer);
 
-            title.textContent = button.dataset.title;
-
-            playingLabel.textContent =
-                `RECORD ${button.dataset.number} / NOW PLAYING`;
-
-            slotText.textContent = 'DROP ANOTHER RECORD TO SWITCH';
-            emptyDisplay.hidden = true;
             status.textContent = `Loading ${button.dataset.title}…`;
-
-            updateState('LOADING');
-            resetResponse();
-            resize();
-
-            last = 0;
-            frame = requestAnimationFrame(draw);
 
             try
             {
@@ -1235,20 +874,67 @@
                     return;
                 }
 
+                audio.pause();
                 audio.src = button.dataset.src;
                 audio.load();
 
-                await audio.play();
+                resetResponse();
 
-                if (token !== session)
+                caption.textContent = button.dataset.title.toUpperCase();
+
+                stage.setAttribute(
+                    'aria-label',
+                    `${button.dataset.title} audiovisual player`
+                );
+
+                stage.classList.add('open');
+                stage.setAttribute('aria-hidden', 'false');
+                portfolio.inert = true;
+                document.body.classList.add('listening');
+                exit.focus();
+
+                active = true;
+                last = 0;
+                pause.textContent = 'Pause';
+                pause.disabled = true;
+
+                frame = requestAnimationFrame(draw);
+
+                startTimer = setTimeout(async () =>
                 {
-                    return;
-                }
+                    if (token !== session)
+                    {
+                        return;
+                    }
 
-                status.textContent = '';
-                pause.disabled = false;
+                    try
+                    {
+                        await audioContext.resume();
+                        await audio.play();
 
-                updateState('PLAYING', true);
+                        if (token !== session)
+                        {
+                            return;
+                        }
+
+                        status.textContent = '';
+                        pause.disabled = false;
+                        starting = false;
+                        lockButtons(false);
+                    }
+                    catch (error)
+                    {
+                        if (token !== session)
+                        {
+                            return;
+                        }
+
+                        close();
+
+                        status.textContent =
+                            `Could not play ${button.dataset.title}. Check that ${button.dataset.src} is beside sound.html.`;
+                    }
+                }, reduced ? 200 : 950);
             }
             catch (error)
             {
@@ -1257,44 +943,38 @@
                     return;
                 }
 
-                close(false);
-
-                status.textContent =
-                    `Could not play ${button.dataset.title}. Check that ${button.dataset.src} is alongside sound.html.`;
+                close();
+                status.textContent = 'Could not start playback. Please try again.';
             }
         }
 
-        function close(restoreFocus = true)
+        function close()
         {
             session++;
+            starting = false;
 
-            const previous = selectedButton;
+            clearTimeout(startTimer);
+            lockButtons(false);
 
             audio.pause();
             active = false;
-            selectedButton = null;
 
             cancelAnimationFrame(frame);
-            resetResponse();
 
-            ctx.clearRect(0, 0, w, h);
-
-            emptyDisplay.hidden = false;
-            title.textContent = 'Choose your sound.';
-            playingLabel.textContent = 'NO RECORD LOADED';
-            slotText.textContent = 'DROP A RECORD HERE ↓';
-
+            stage.classList.remove('open');
+            portfolio.inert = false;
+            document.body.classList.remove('listening');
             pause.disabled = true;
-            eject.disabled = true;
-            pause.textContent = 'Pause';
             status.textContent = '';
+            selectedButton.focus();
 
-            updateState('STANDBY');
+            clearTimeout(fadeTimer);
 
-            if (restoreFocus && previous)
+            fadeTimer = setTimeout(() =>
             {
-                previous.focus();
-            }
+                stage.setAttribute('aria-hidden', 'true');
+                ctx.clearRect(0, 0, w, h);
+            }, reduced ? 200 : 1000);
         }
 
         async function toggle()
@@ -1327,15 +1007,12 @@
                     }
 
                     pause.textContent = 'Pause';
-                    updateState('PLAYING', true);
                 }
                 catch (error)
                 {
                     if (token === session)
                     {
-                        pause.textContent = 'Retry';
-                        status.textContent =
-                            'Playback could not resume. Try again.';
+                        pause.textContent = 'Retry play';
                     }
                 }
                 finally
@@ -1350,103 +1027,28 @@
             {
                 audio.pause();
                 pause.textContent = 'Resume';
-                updateState('PAUSED');
             }
         }
-
-        let dragEndedAt = 0;
 
         for (const button of trackButtons)
         {
-            button.addEventListener('click', () =>
-            {
-                if (Date.now() - dragEndedAt > 250)
-                {
-                    enter(button);
-                }
-            });
-
-            button.addEventListener('dragstart', event =>
-            {
-                event.dataTransfer.effectAllowed = 'copy';
-                event.dataTransfer.setData('text/plain', button.id);
-                button.classList.add('dragging');
-            });
-
-            button.addEventListener('dragend', () =>
-            {
-                dragEndedAt = Date.now();
-                button.classList.remove('dragging');
-                jukebox.classList.remove('drag-over');
-            });
+            button.addEventListener('click', () => enter(button));
         }
 
-        jukebox.addEventListener('dragover', event =>
-        {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = 'copy';
-            jukebox.classList.add('drag-over');
-        });
-
-        jukebox.addEventListener('dragleave', event =>
-        {
-            if (!jukebox.contains(event.relatedTarget))
-            {
-                jukebox.classList.remove('drag-over');
-            }
-        });
-
-        jukebox.addEventListener('drop', event =>
-        {
-            event.preventDefault();
-            jukebox.classList.remove('drag-over');
-
-            const id = event.dataTransfer.getData('text/plain');
-            const button = trackButtons.find(item => item.id === id);
-
-            if (button)
-            {
-                for (const record of trackButtons)
-                {
-                    record.classList.remove('dragging');
-                }
-
-                enter(button);
-            }
-            else
-            {
-                status.textContent = 'Choose a record from the collection.';
-            }
-        });
-
-        dropZone.addEventListener('click', () =>
-        {
-            enter(selectedButton || trackButtons[0]);
-        });
-
-        dropZone.addEventListener('keydown', event =>
-        {
-            if (event.key === 'Enter' || event.code === 'Space')
-            {
-                event.preventDefault();
-                enter(selectedButton || trackButtons[0]);
-            }
-        });
-
+        exit.addEventListener('click', close);
         pause.addEventListener('click', toggle);
-        eject.addEventListener('click', () => close());
-        audio.addEventListener('ended', () => close(false));
+        audio.addEventListener('ended', close);
 
         audio.addEventListener('error', () =>
         {
-            if (!active || !selectedButton)
+            if (!active && !starting)
             {
                 return;
             }
 
             const filename = selectedButton.dataset.src;
 
-            close(false);
+            close();
 
             status.textContent =
                 `Could not load ${filename}. Check the filename and upload.`;
@@ -1466,11 +1068,33 @@
 
             if (
                 event.code === 'Space'
-                && ['BODY', 'CANVAS'].includes(event.target.tagName)
+                && !['INPUT', 'BUTTON'].includes(event.target.tagName)
+                && !pause.disabled
             )
             {
                 event.preventDefault();
                 toggle();
+            }
+
+            if (event.key === 'Tab')
+            {
+                const nodes = [
+                    ...stage.querySelectorAll('button:not(:disabled),input')
+                ];
+
+                const first = nodes[0];
+                const end = nodes[nodes.length - 1];
+
+                if (event.shiftKey && document.activeElement === first)
+                {
+                    event.preventDefault();
+                    end.focus();
+                }
+                else if (!event.shiftKey && document.activeElement === end)
+                {
+                    event.preventDefault();
+                    first.focus();
+                }
             }
         });
     </script>
