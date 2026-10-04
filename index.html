@@ -26,6 +26,11 @@
             line-height: 1.6;
         }
 
+        body.listening
+        {
+            overflow: hidden;
+        }
+
         main
         {
             max-width: 850px;
@@ -128,6 +133,11 @@
             justify-content: space-between;
             align-items: center;
             gap: 20px;
+        }
+
+        .song + .song
+        {
+            margin-top: 28px;
         }
 
         .song small
@@ -284,7 +294,30 @@
                     <small>A living audiovisual composition</small>
                 </div>
 
-                <button id="start" type="button">▶ Play</button>
+                <button
+                    class="track-play"
+                    type="button"
+                    data-src="young-turks.mp3"
+                    data-title="Young Turks"
+                >
+                    ▶ Play
+                </button>
+            </div>
+
+            <div class="song">
+                <div>
+                    Palermo
+                    <small>A living audiovisual composition</small>
+                </div>
+
+                <button
+                    class="track-play"
+                    type="button"
+                    data-src="PalermoWEB.m4a"
+                    data-title="Palermo"
+                >
+                    ▶ Play
+                </button>
             </div>
 
             <p id="status" role="status"></p>
@@ -329,7 +362,7 @@
         id="experience"
         role="dialog"
         aria-modal="true"
-        aria-label="Young Turks audiovisual player"
+        aria-label="Audiovisual player"
         aria-hidden="true"
     >
         <canvas id="lights" aria-hidden="true"></canvas>
@@ -350,11 +383,7 @@
         </div>
     </div>
 
-    <audio
-        id="audio"
-        src="young-turks.mp3"
-        preload="metadata"
-    ></audio>
+    <audio id="audio" preload="metadata"></audio>
 
     <script src="visualizer.js"></script>
 </body>

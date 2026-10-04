@@ -4,21 +4,23 @@ const audio = document.querySelector('#audio');
 const stage = document.querySelector('#experience');
 const canvas = document.querySelector('#lights');
 const ctx = canvas.getContext('2d');
-const start = document.querySelector('#start');
+const trackButtons = [...document.querySelectorAll('.track-play')];
 const pause = document.querySelector('#pause');
 const gentle = document.querySelector('#gentle');
 const portfolio = document.querySelector('#portfolio');
 const exit = document.querySelector('#exit');
 const status = document.querySelector('#status');
+const caption = document.querySelector('.caption');
 
+let selectedButton = trackButtons[0];
 let active = false;
 let frame;
 let last = 0;
 let w = 0;
 let h = 0;
 let fadeTimer;
-let playTimer;
 let session = 0;
+let starting = false;
 
 let audioContext;
 let analyser;
@@ -171,11 +173,9 @@ function ringWave(angle, band)
         + Math.cos(angle) * span
         + shift;
 
-    const main = readWave(position);
-    const nearby = readWave(position + 4);
-    const previous = readWave(position - 4);
-
-    return main * 0.6 + nearby * 0.2 + previous * 0.2;
+    return readWave(position) * 0.6
+        + readWave(position + 4) * 0.2
+        + readWave(position - 4) * 0.2;
 }
 
 function renderGraphic(time, volume, bass, hit)
@@ -344,13 +344,29 @@ function draw(now)
     frame = requestAnimationFrame(draw);
 }
 
-async function enter()
+function lockButtons(locked)
 {
+    for (const button of trackButtons)
+    {
+        button.disabled = locked;
+    }
+}
+
+async function enter(button)
+{
+    if (starting || active)
+    {
+        return;
+    }
+
     const token = ++session;
 
+    selectedButton = button;
+    starting = true;
+    lockButtons(true);
     clearTimeout(fadeTimer);
-    start.disabled = true;
-    status.textContent = 'Loading music…';
+
+    status.textContent = `Loading ${button.dataset.title}…`;
 
     try
     {
@@ -361,55 +377,70 @@ async function enter()
             return;
         }
 
+        audio.pause();
+        audio.src = button.dataset.src;
+        audio.load();
+
         resetResponse();
+
+        caption.textContent = button.dataset.title.toUpperCase();
+
+        stage.setAttribute(
+            'aria-label',
+            `${button.dataset.title} audiovisual player`
+        );
 
         stage.classList.add('open');
         stage.setAttribute('aria-hidden', 'false');
         portfolio.inert = true;
+        document.body.classList.add('listening');
         exit.focus();
 
         active = true;
         last = 0;
-        audio.currentTime = 0;
         pause.textContent = 'Pause';
+        pause.disabled = true;
 
         frame = requestAnimationFrame(draw);
 
-        playTimer = setTimeout(async () =>
-        {
-            if (token !== session)
-            {
-                return;
-            }
+        await audio.play();
 
-            try
-            {
-                await audio.play();
-                status.textContent = '';
-            }
-            catch (error)
-            {
-                close();
-                status.textContent =
-                    'Playback could not start. Please try Play again.';
-            }
-        }, reduced ? 200 : 950);
+        if (token !== session)
+        {
+            audio.pause();
+            return;
+        }
+
+        status.textContent = '';
+        pause.disabled = false;
     }
     catch (error)
     {
+        if (token !== session)
+        {
+            return;
+        }
+
+        close();
+
         status.textContent =
-            'Could not load the music. Please reload the page and try again.';
+            `Could not play ${button.dataset.title}. Check that ${button.dataset.src} is in the same folder as index.html.`;
     }
     finally
     {
-        start.disabled = false;
+        if (token === session)
+        {
+            starting = false;
+            lockButtons(false);
+        }
     }
 }
 
 function close()
 {
     session++;
-    clearTimeout(playTimer);
+    starting = false;
+    lockButtons(false);
 
     audio.pause();
     active = false;
@@ -418,7 +449,11 @@ function close()
 
     stage.classList.remove('open');
     portfolio.inert = false;
-    start.focus();
+    document.body.classList.remove('listening');
+    pause.disabled = false;
+    selectedButton.focus();
+
+    clearTimeout(fadeTimer);
 
     fadeTimer = setTimeout(() =>
     {
@@ -429,17 +464,41 @@ function close()
 
 async function toggle()
 {
+    const token = session;
+
     if (audio.paused)
     {
+        pause.disabled = true;
+
         try
         {
             await connectAudio();
+
+            if (!active || token !== session)
+            {
+                return;
+            }
+
             await audio.play();
+
+            if (!active || token !== session)
+            {
+                audio.pause();
+                return;
+            }
+
             pause.textContent = 'Pause';
         }
         catch (error)
         {
-            pause.textContent = 'Retry play';
+            if (active && token === session)
+            {
+                pause.textContent = 'Retry play';
+            }
+        }
+        finally
+        {
+            pause.disabled = false;
         }
     }
     else
@@ -449,19 +508,29 @@ async function toggle()
     }
 }
 
-start.addEventListener('click', enter);
+for (const button of trackButtons)
+{
+    button.addEventListener('click', () => enter(button));
+}
+
 exit.addEventListener('click', close);
 pause.addEventListener('click', toggle);
 audio.addEventListener('ended', close);
 
 audio.addEventListener('error', () =>
 {
-    if (active)
+    if (!active && !starting)
     {
-        close();
+        return;
     }
 
-    status.textContent = 'Could not load young-turks.mp3.';
+    const title = selectedButton.dataset.title;
+    const filename = selectedButton.dataset.src;
+
+    close();
+
+    status.textContent =
+        `Could not load ${title}. Check the filename: ${filename}`;
 });
 
 document.addEventListener('keydown', event =>
@@ -479,6 +548,7 @@ document.addEventListener('keydown', event =>
     if (
         event.code === 'Space'
         && !['INPUT', 'BUTTON'].includes(event.target.tagName)
+        && !pause.disabled
     )
     {
         event.preventDefault();
@@ -487,7 +557,10 @@ document.addEventListener('keydown', event =>
 
     if (event.key === 'Tab')
     {
-        const nodes = [...stage.querySelectorAll('button,input')];
+        const nodes = [
+            ...stage.querySelectorAll('button:not(:disabled),input')
+        ];
+
         const first = nodes[0];
         const end = nodes[nodes.length - 1];
 
