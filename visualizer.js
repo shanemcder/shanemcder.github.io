@@ -187,19 +187,32 @@ function renderGraphic(time, volume, bass, hit)
 
     const quiet = gentle.checked;
     const motion = time * (quiet ? 0.25 : 1);
-    const intensity = quiet ? 0.35 : 1;
-    const unit = Math.min(w, h) * 0.34;
+    const intensity = quiet ? 0.25 : 1;
+    const unit = Math.min(w, h) * 0.29;
+    const energy = volume * 0.45 + bass * 0.55;
 
-    const pulse = 1 + intensity
-        * (volume * 0.065 + bass * 0.085 + hit * 0.16);
+    const pulse = 1 + intensity * (
+        volume * 0.10
+        + bass * 0.15
+        + hit * 0.30
+    );
+
+    const swayX = Math.sin(motion * 1.3)
+        * unit * energy * 0.065 * intensity;
+
+    const swayY = Math.cos(motion * 1.7)
+        * unit * energy * 0.065 * intensity;
+
+    const stretch = Math.sin(motion * 2.4)
+        * energy * 0.07 * intensity;
 
     const brightness = 0.28 + volume * 0.62;
-    const waveStrength = quiet ? 0.018 : 0.075;
     const baseHue = (355 + time * 8) % 360;
 
     ctx.save();
-    ctx.translate(w / 2, h / 2);
-    ctx.scale(pulse, pulse);
+    ctx.translate(w / 2 + swayX, h / 2 + swayY);
+    ctx.rotate(Math.sin(motion * 0.8) * energy * 0.12 * intensity);
+    ctx.scale(pulse * (1 + stretch), pulse * (1 - stretch));
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
@@ -209,34 +222,56 @@ function renderGraphic(time, volume, bass, hit)
         const phase = offset * Math.PI * 2;
         const hue = (baseHue + (band % 3 === 0 ? 0 : 34)) % 360;
         const opacity = brightness * (quiet ? 0.75 : 1);
-        const ringResponse = 0.55 + offset * 0.75;
+
+        const ringBounce = Math.sin(motion * 3.5 - phase * 2)
+            * energy * 0.025 * intensity;
+
+        const ringResponse = 0.65 + offset * 0.9;
+        const waveStrength = quiet ? 0.025 : 0.16;
 
         ctx.strokeStyle =
             `hsla(${hue},85%,${58 + volume * 12}%,${opacity})`;
 
         ctx.lineWidth = Math.max(1, unit / 140)
-            + volume * 0.6
-            + hit * intensity;
+            + volume * 0.7
+            + hit * intensity * 1.3;
 
         ctx.beginPath();
 
         for (let point = 0; point <= 240; point++)
         {
             const angle = point / 240 * Math.PI * 2;
-            const ripple = 0.045 + bass * 0.012 * intensity;
             const wave = ringWave(angle, band);
 
-            const radius = unit * (
+            const primaryRipple = (
+                0.045 + bass * 0.025 * intensity
+            ) * Math.sin(angle * 7 - motion * 2 + phase);
+
+            const looseRipple = Math.sin(
+                angle * 3 + motion * 1.8 - phase
+            ) * energy * 0.035 * intensity;
+
+            const impactRipple = Math.sin(
+                angle * 5 - phase * 2 + motion * 4
+            ) * hit * 0.035 * intensity;
+
+            const radius = unit * Math.max(
+                0.08,
                 0.2
                 + offset * 0.85
-                + ripple * Math.sin(angle * 7 - motion * 2 + phase)
+                + ringBounce
+                + primaryRipple
+                + looseRipple
+                + impactRipple
                 + wave * waveStrength * ringResponse
             );
 
             const twisted = angle
                 + motion * 0.2
                 + Math.sin(angle * 3 - motion)
-                    * (0.06 + hit * 0.018 * intensity);
+                    * (0.06 + hit * 0.045 * intensity)
+                + Math.sin(motion * 1.4 + phase)
+                    * energy * 0.045 * intensity;
 
             const x = radius * Math.cos(twisted);
             const y = radius * Math.sin(twisted);
@@ -257,9 +292,20 @@ function renderGraphic(time, volume, bass, hit)
 
     for (let dot = 0; dot < 12; dot++)
     {
-        const angle = dot / 12 * Math.PI * 2 + motion * 0.4;
-        const radius = unit
-            * (1.1 + 0.04 * Math.sin(motion * 3 + dot));
+        const phase = dot / 12 * Math.PI * 2;
+
+        const angle = phase
+            + motion * 0.4
+            + Math.sin(motion * 2 + phase)
+                * energy * 0.12 * intensity;
+
+        const radius = unit * (
+            1.13
+            + 0.04 * Math.sin(motion * 3 + dot)
+            + Math.sin(motion * 4 - phase)
+                * energy * 0.07 * intensity
+            + hit * 0.10 * intensity
+        );
 
         const dotHue = (baseHue + 18) % 360;
 
@@ -271,7 +317,7 @@ function renderGraphic(time, volume, bass, hit)
         ctx.arc(
             radius * Math.cos(angle),
             radius * Math.sin(angle),
-            2 + volume * 3 + hit * intensity * 2,
+            2 + volume * 3 + hit * intensity * 3,
             0,
             Math.PI * 2
         );
