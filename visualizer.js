@@ -165,13 +165,9 @@ function ringWave(angle, band)
         return 0;
     }
 
-    const center = waveform.length * 0.5;
-    const span = waveform.length * 0.42;
-    const shift = band * 19;
-
-    const position = center
-        + Math.cos(angle) * span
-        + shift;
+    const position = waveform.length * 0.5
+        + Math.cos(angle) * waveform.length * 0.42
+        + band * 19;
 
     return readWave(position) * 0.6
         + readWave(position + 4) * 0.2
@@ -188,23 +184,23 @@ function renderGraphic(time, volume, bass, hit)
     const quiet = gentle.checked;
     const motion = time * (quiet ? 0.25 : 1);
     const intensity = quiet ? 0.25 : 1;
-    const unit = Math.min(w, h) * 0.29;
+    const unit = Math.min(w, h) * 0.31;
     const energy = volume * 0.45 + bass * 0.55;
 
     const pulse = 1 + intensity * (
-        volume * 0.10
-        + bass * 0.15
-        + hit * 0.30
+        volume * 0.08
+        + bass * 0.12
+        + hit * 0.22
     );
 
     const swayX = Math.sin(motion * 1.3)
-        * unit * energy * 0.065 * intensity;
+        * unit * energy * 0.04 * intensity;
 
     const swayY = Math.cos(motion * 1.7)
-        * unit * energy * 0.065 * intensity;
+        * unit * energy * 0.04 * intensity;
 
     const stretch = Math.sin(motion * 2.4)
-        * energy * 0.07 * intensity;
+        * energy * 0.045 * intensity;
 
     const brightness = 0.28 + volume * 0.62;
     const baseHue = (355 + time * 8) % 360;
@@ -227,7 +223,7 @@ function renderGraphic(time, volume, bass, hit)
             * energy * 0.025 * intensity;
 
         const ringResponse = 0.65 + offset * 0.9;
-        const waveStrength = quiet ? 0.025 : 0.16;
+        const waveStrength = quiet ? 0.025 : 0.11;
 
         ctx.strokeStyle =
             `hsla(${hue},85%,${58 + volume * 12}%,${opacity})`;
