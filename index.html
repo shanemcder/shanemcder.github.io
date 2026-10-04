@@ -193,6 +193,7 @@
             left: 24px;
             right: 24px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             gap: 16px;
             color: #bbb;
@@ -206,13 +207,6 @@
             padding: 7px 16px;
         }
 
-        #seek
-        {
-            flex: 1;
-            min-width: 30px;
-            accent-color: #b2a4cd;
-        }
-
         .controls label
         {
             display: flex;
@@ -224,12 +218,6 @@
         #gentle
         {
             accent-color: #b2a4cd;
-        }
-
-        #time
-        {
-            min-width: 36px;
-            font-variant-numeric: tabular-nums;
         }
 
         @media (max-width: 600px)
@@ -247,15 +235,8 @@
 
             .controls
             {
-                gap: 8px;
-                left: 12px;
-                right: 12px;
-                flex-wrap: wrap;
-            }
-
-            #seek
-            {
-                min-width: 90px;
+                left: 16px;
+                right: 16px;
             }
 
             .caption
@@ -361,18 +342,6 @@
 
         <div class="controls">
             <button id="pause" type="button">Pause</button>
-
-            <span id="time">0:00</span>
-
-            <input
-                id="seek"
-                type="range"
-                min="0"
-                max="89"
-                value="0"
-                step="0.1"
-                aria-label="Playback position"
-            >
 
             <label>
                 <input id="gentle" type="checkbox">

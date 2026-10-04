@@ -2,12 +2,14 @@
 
 const audio = document.querySelector('#audio');
 const stage = document.querySelector('#experience');
-const canvas = document.querySelector('canvas');
+const canvas = document.querySelector('#lights');
 const ctx = canvas.getContext('2d');
 const start = document.querySelector('#start');
 const pause = document.querySelector('#pause');
-const seek = document.querySelector('#seek');
 const gentle = document.querySelector('#gentle');
+const portfolio = document.querySelector('#portfolio');
+const exit = document.querySelector('#exit');
+const status = document.querySelector('#status');
 
 let active = false;
 let frame;
@@ -193,6 +195,7 @@ function renderGraphic(time, volume, bass, hit)
 
     const brightness = 0.28 + volume * 0.62;
     const waveStrength = quiet ? 0.018 : 0.075;
+    const baseHue = (355 + time * 8) % 360;
 
     ctx.save();
     ctx.translate(w / 2, h / 2);
@@ -204,7 +207,7 @@ function renderGraphic(time, volume, bass, hit)
     {
         const offset = band / 28;
         const phase = offset * Math.PI * 2;
-        const hue = band % 3 === 0 ? 355 : 29;
+        const hue = (baseHue + (band % 3 === 0 ? 0 : 34)) % 360;
         const opacity = brightness * (quiet ? 0.75 : 1);
         const ringResponse = 0.55 + offset * 0.75;
 
@@ -258,7 +261,11 @@ function renderGraphic(time, volume, bass, hit)
         const radius = unit
             * (1.1 + 0.04 * Math.sin(motion * 3 + dot));
 
-        ctx.fillStyle = `hsla(9,85%,72%,${0.25 + volume * 0.6})`;
+        const dotHue = (baseHue + 18) % 360;
+
+        ctx.fillStyle =
+            `hsla(${dotHue},85%,72%,${0.25 + volume * 0.6})`;
+
         ctx.beginPath();
 
         ctx.arc(
@@ -288,26 +295,8 @@ function draw(now)
     sampleMusic(dt);
     renderGraphic(audio.currentTime, loudness, lowEnd, impact);
 
-    seek.value = audio.currentTime;
-
-    const time = audio.currentTime;
-
-    document.querySelector('#time').textContent =
-        `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
-
     frame = requestAnimationFrame(draw);
 }
-
-function updateDuration()
-{
-    if (Number.isFinite(audio.duration))
-    {
-        seek.max = audio.duration;
-    }
-}
-
-audio.addEventListener('loadedmetadata', updateDuration);
-updateDuration();
 
 async function enter()
 {
@@ -315,7 +304,7 @@ async function enter()
 
     clearTimeout(fadeTimer);
     start.disabled = true;
-    document.querySelector('#status').textContent = 'Loading music…';
+    status.textContent = 'Loading music…';
 
     try
     {
@@ -327,12 +316,11 @@ async function enter()
         }
 
         resetResponse();
-        updateDuration();
 
         stage.classList.add('open');
         stage.setAttribute('aria-hidden', 'false');
-        document.querySelector('#portfolio').inert = true;
-        document.querySelector('#exit').focus();
+        portfolio.inert = true;
+        exit.focus();
 
         active = true;
         last = 0;
@@ -351,20 +339,19 @@ async function enter()
             try
             {
                 await audio.play();
-                document.querySelector('#status').textContent = '';
+                status.textContent = '';
             }
             catch (error)
             {
                 close();
-
-                document.querySelector('#status').textContent =
+                status.textContent =
                     'Playback could not start. Please try Play again.';
             }
         }, reduced ? 200 : 950);
     }
     catch (error)
     {
-        document.querySelector('#status').textContent =
+        status.textContent =
             'Could not load the music. Please reload the page and try again.';
     }
     finally
@@ -384,7 +371,7 @@ function close()
     cancelAnimationFrame(frame);
 
     stage.classList.remove('open');
-    document.querySelector('#portfolio').inert = false;
+    portfolio.inert = false;
     start.focus();
 
     fadeTimer = setTimeout(() =>
@@ -417,7 +404,7 @@ async function toggle()
 }
 
 start.addEventListener('click', enter);
-document.querySelector('#exit').addEventListener('click', close);
+exit.addEventListener('click', close);
 pause.addEventListener('click', toggle);
 audio.addEventListener('ended', close);
 
@@ -428,14 +415,7 @@ audio.addEventListener('error', () =>
         close();
     }
 
-    document.querySelector('#status').textContent =
-        'Could not load young-turks.mp3.';
-});
-
-seek.addEventListener('input', () =>
-{
-    audio.currentTime = Number(seek.value);
-    resetResponse();
+    status.textContent = 'Could not load young-turks.mp3.';
 });
 
 document.addEventListener('keydown', event =>
