@@ -75,6 +75,11 @@ function resetResponse()
     lowEnd = 0;
     impact = 0;
     baseline = 0;
+
+    if (waveform)
+    {
+        waveform.fill(0);
+    }
 }
 
 function sampleMusic(dt)
@@ -132,6 +137,45 @@ function sampleMusic(dt)
     );
 }
 
+function readWave(position)
+{
+    if (!waveform)
+    {
+        return 0;
+    }
+
+    const length = waveform.length;
+    const wrapped = ((position % length) + length) % length;
+    const sample = Math.floor(wrapped);
+    const next = (sample + 1) % length;
+    const fraction = wrapped - sample;
+
+    return waveform[sample] * (1 - fraction)
+        + waveform[next] * fraction;
+}
+
+function ringWave(angle, band)
+{
+    if (!waveform)
+    {
+        return 0;
+    }
+
+    const center = waveform.length * 0.5;
+    const span = waveform.length * 0.42;
+    const shift = band * 19;
+
+    const position = center
+        + Math.cos(angle) * span
+        + shift;
+
+    const main = readWave(position);
+    const nearby = readWave(position + 4);
+    const previous = readWave(position - 4);
+
+    return main * 0.6 + nearby * 0.2 + previous * 0.2;
+}
+
 function renderGraphic(time, volume, bass, hit)
 {
     ctx.globalAlpha = 1;
@@ -148,6 +192,7 @@ function renderGraphic(time, volume, bass, hit)
         * (volume * 0.065 + bass * 0.085 + hit * 0.16);
 
     const brightness = 0.28 + volume * 0.62;
+    const waveStrength = quiet ? 0.018 : 0.075;
 
     ctx.save();
     ctx.translate(w / 2, h / 2);
@@ -161,6 +206,7 @@ function renderGraphic(time, volume, bass, hit)
         const phase = offset * Math.PI * 2;
         const hue = band % 3 === 0 ? 355 : 29;
         const opacity = brightness * (quiet ? 0.75 : 1);
+        const ringResponse = 0.55 + offset * 0.75;
 
         ctx.strokeStyle =
             `hsla(${hue},85%,${58 + volume * 12}%,${opacity})`;
@@ -171,15 +217,17 @@ function renderGraphic(time, volume, bass, hit)
 
         ctx.beginPath();
 
-        for (let point = 0; point <= 160; point++)
+        for (let point = 0; point <= 240; point++)
         {
-            const angle = point / 160 * Math.PI * 2;
+            const angle = point / 240 * Math.PI * 2;
             const ripple = 0.045 + bass * 0.012 * intensity;
+            const wave = ringWave(angle, band);
 
             const radius = unit * (
                 0.2
                 + offset * 0.85
                 + ripple * Math.sin(angle * 7 - motion * 2 + phase)
+                + wave * waveStrength * ringResponse
             );
 
             const twisted = angle
