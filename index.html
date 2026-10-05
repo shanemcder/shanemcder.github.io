@@ -112,17 +112,76 @@
                 margin-bottom: 85px;
             }
         }
+        html
+        {
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+        }
+
+        main
+        {
+            max-width: 850px;
+            padding: 72px 24px 96px;
+            margin: auto;
+        }
+
+        nav.site-nav
+        {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0 0 110px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        nav.site-nav a
+        {
+            color: #181818;
+            text-decoration: none;
+        }
+
+        nav.site-nav a:hover
+        {
+            color: #777;
+        }
+
+        nav.site-nav a[aria-current="page"]
+        {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        nav.site-nav a:focus-visible
+        {
+            outline: 2px solid #a58aff;
+            outline-offset: 6px;
+        }
+
+        @media (max-width: 600px)
+        {
+            main
+            {
+                padding-top: 32px;
+            }
+
+            nav.site-nav
+            {
+                margin-bottom: 85px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <main>
-        <nav aria-label="Main navigation">
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="index.html" aria-current="page">Home</a>
             <a href="sound.html">Sound</a>
-            <a href="#contact">Contact</a>
-            <a href="resume.pdf" download="Shane_McDermott_Resume.pdf">
-                Resume
-            </a>
+            <a href="projects.html">Projects</a>
+            <a href="resume.pdf" download="Shane_McDermott_Resume.pdf">Resume</a>
         </nav>
 
         <header>
@@ -130,39 +189,7 @@
             <p class="intro">I am passionate about creating.</p>
         </header>
 
-        <section id="contact">
-            <h2>Find me</h2>
-
-            <div class="links">
-                <a href="mailto:spmcder@gmail.com">Email ↗</a>
-
-                <a
-                    href="https://www.artstation.com/shanemcder"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    ArtStation ↗
-                </a>
-
-                <a
-                    href="https://soundcloud.com/centurycentury"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    SoundCloud ↗
-                </a>
-
-                <a
-                    href="https://github.com/shanemcder"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    GitHub ↗
-                </a>
-            </div>
-        </section>
-
-        <footer>© Shane McDermott</footer>
+<footer>© Shane McDermott</footer>
     </main>
 </body>
 </html>

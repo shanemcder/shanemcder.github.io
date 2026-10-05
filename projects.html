@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Projects by Shane McDermott — software, interactive audio, and virtual reality.">
+    <title>Projects — Shane McDermott</title>
+    <style>
+        :root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color-scheme: light; }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: #181818; background: #fafafa; line-height: 1.6; }
+        a { color: inherit; text-underline-offset: 4px; }
+        a:hover { color: #777; }
+        h1 { font-size: clamp(44px, 9vw, 82px); letter-spacing: -.065em; line-height: 1.04; margin: 0 0 24px; }
+        .intro { font-size: 21px; max-width: 610px; color: #555; margin: 0 0 64px; }
+        .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 32px; margin-bottom: 64px; }
+        article { border-top: 1px solid #d9d9d9; padding-top: 20px; }
+        .category { margin: 0 0 12px; color: #888; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; }
+        h2 { font-size: 23px; font-weight: 500; letter-spacing: -.035em; line-height: 1.2; margin: 0 0 14px; }
+        article p { font-size: 15px; color: #555; margin: 0 0 18px; }
+        .tools { color: #888; font-size: 12px; }
+        .project-link { display: inline-block; margin-top: 16px; font-size: 14px; }
+        .more { display: flex; gap: 24px; flex-wrap: wrap; font-size: 14px; margin-bottom: 80px; }
+        footer { color: #888; font-size: 14px; }
+        @media (max-width: 600px) { .projects { grid-template-columns: 1fr; gap: 32px; } .intro { margin-bottom: 48px; } }
+        html
+        {
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+        }
+
+        main
+        {
+            max-width: 850px;
+            padding: 72px 24px 96px;
+            margin: auto;
+        }
+
+        nav.site-nav
+        {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0 0 110px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        nav.site-nav a
+        {
+            color: #181818;
+            text-decoration: none;
+        }
+
+        nav.site-nav a:hover
+        {
+            color: #777;
+        }
+
+        nav.site-nav a[aria-current="page"]
+        {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        nav.site-nav a:focus-visible
+        {
+            outline: 2px solid #a58aff;
+            outline-offset: 6px;
+        }
+
+        @media (max-width: 600px)
+        {
+            main
+            {
+                padding-top: 32px;
+            }
+
+            nav.site-nav
+            {
+                margin-bottom: 85px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="sound.html">Sound</a>
+            <a href="projects.html" aria-current="page">Projects</a>
+            <a href="resume.pdf" download="Shane_McDermott_Resume.pdf">Resume</a>
+        </nav>
+        <header>
+            <h1>Projects.</h1>
+            <p class="intro">Software, sound, and interactive experiences.</p>
+        </header>
+        <section class="projects" aria-label="Selected projects">
+            <article>
+                <p class="category">Creative coding / Audio</p>
+                <h2>Audio-reactive visuals</h2>
+                <p>A browser-based listening experience that turns music into moving geometry. Live waveform and frequency analysis drive the rings, color, and motion.</p>
+                <div class="tools">JavaScript · Canvas · Web Audio</div>
+                <a class="project-link" href="sound.html">Listen on Sound ↗</a>
+            </article>
+            <article>
+                <p class="category">Virtual reality / 3D</p>
+                <h2>St. Augustine Forts</h2>
+                <p>A virtual reality exploration of historic forts, combining 3D environment modeling, interactive travel, and real-time performance optimization.</p>
+                <div class="tools">Unity · Maya · VR</div>
+            </article>
+            <article>
+                <p class="category">Android / Productivity</p>
+                <h2>Taskmaster</h2>
+                <p>A daily task planner with categories, duration estimates, progress tracking, and a penguin that celebrates finishing the day’s tasks.</p>
+                <div class="tools">Android · Room · RecyclerView</div>
+            </article>
+            <article>
+                <p class="category">Web / Full stack</p>
+                <h2>EventMaster</h2>
+                <p>An event management application with account registration, event administration, and RSVPs for attendees.</p>
+                <div class="tools">PHP · MySQL · JavaScript</div>
+            </article>
+        </section>
+        <div class="more">
+            <a href="https://github.com/shanemcder" target="_blank" rel="noopener noreferrer">More on GitHub ↗</a>
+            <a href="https://www.artstation.com/shanemcder" target="_blank" rel="noopener noreferrer">3D work on ArtStation ↗</a>
+        </div>
+        <footer>© Shane McDermott</footer>
+    </main>
+</body>
+</html>
