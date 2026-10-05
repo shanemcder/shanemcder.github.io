@@ -1,0 +1,540 @@
+:root
+{
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+}
+
+*
+{
+    box-sizing: border-box;
+}
+
+html
+{
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+body
+{
+    margin: 0;
+    background: #fff;
+    color: #1d1d1f;
+    line-height: 1.65;
+}
+
+main
+{
+    max-width: 960px;
+    margin: auto;
+    padding: 36px 32px 64px;
+}
+
+a
+{
+    color: inherit;
+    text-underline-offset: 4px;
+}
+
+button,
+input
+{
+    font: inherit;
+}
+
+button
+{
+    cursor: pointer;
+}
+
+nav.site-nav
+{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: fit-content;
+    max-width: 100%;
+    gap: 4px;
+    padding: 6px;
+    margin: 0 0 112px;
+    border: 1px solid #e9e9ec;
+    border-radius: 999px;
+    background: #f5f5f7;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+nav.site-nav a
+{
+    padding: 10px 18px;
+    border-radius: 999px;
+    color: #6e6e73;
+    text-decoration: none;
+    transition: background 180ms ease, color 180ms ease;
+}
+
+nav.site-nav a:hover
+{
+    color: #1d1d1f;
+    background: #ebebee;
+}
+
+nav.site-nav a[aria-current="page"]
+{
+    color: #1d1d1f;
+    background: #fff;
+    text-decoration: none;
+    box-shadow: 0 1px 4px #0000000a;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible
+{
+    outline: 3px solid #0071e3;
+    outline-offset: 5px;
+}
+
+h1
+{
+    font-size: clamp(44px, 7vw, 72px);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 1.06;
+    margin: 0 0 28px;
+}
+
+.intro
+{
+    max-width: 620px;
+    font-size: clamp(19px, 2.5vw, 24px);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.5;
+    color: #6e6e73;
+    margin: 0 0 88px;
+}
+
+h2
+{
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+    margin: 0 0 22px;
+}
+
+.find-me
+{
+    margin-bottom: 96px;
+}
+
+.links
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 15px;
+}
+
+.links a,
+.video-link a
+{
+    color: #0071e3;
+    text-decoration: none;
+}
+
+.links a:hover,
+.video-link a:hover
+{
+    text-decoration: underline;
+}
+
+.projects
+{
+    margin-bottom: 80px;
+}
+
+article
+{
+    border-top: 1px solid #e5e5e7;
+    padding-top: 32px;
+}
+
+article p
+{
+    max-width: 680px;
+    font-size: 17px;
+    color: #6e6e73;
+    margin: 0 0 18px;
+}
+
+article .category
+{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #86868b;
+    margin-bottom: 16px;
+}
+
+.tools
+{
+    margin: 24px 0;
+    font-size: 13px;
+    color: #86868b;
+}
+
+.project-video
+{
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #e5e5e7;
+    border-radius: 20px;
+    background: #f5f5f7;
+    margin-top: 32px;
+}
+
+.project-video iframe
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+article .video-link
+{
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.sound-heading
+{
+    margin-bottom: 64px;
+}
+
+.records
+{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 72px;
+}
+
+.record
+{
+    display: block;
+    width: 100%;
+    padding: 24px;
+    border: 1px solid #e9e9ec;
+    border-radius: 24px;
+    background: #fafafa;
+    color: inherit;
+    text-align: left;
+    transition: background 220ms ease, border-color 220ms ease;
+}
+
+.record:hover
+{
+    background: #f5f5f7;
+    border-color: #d2d2d7;
+}
+
+.record:disabled
+{
+    cursor: wait;
+    opacity: 0.6;
+}
+
+.vinyl
+{
+    position: relative;
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        #161618 0px,
+        #161618 2px,
+        #29292b 3px,
+        #101012 4px
+    );
+    border: 1px solid #303033;
+    box-shadow: 0 14px 30px #00000018;
+    transition: transform 400ms ease, box-shadow 400ms ease;
+}
+
+.vinyl::before
+{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 30deg,
+        transparent,
+        #ffffff0e 50deg,
+        transparent 90deg,
+        transparent 180deg,
+        #ffffff12 230deg,
+        transparent 280deg
+    );
+}
+
+.record-label
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 44%;
+    height: 44%;
+    padding: 10px 4px;
+    border-radius: 50%;
+    background: var(--label);
+    color: #181818;
+}
+
+.record-label small
+{
+    font-size: 5px;
+    letter-spacing: 0.08em;
+}
+
+.record-label strong
+{
+    font-size: clamp(10px, 1.3vw, 14px);
+    text-align: center;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+}
+
+.record-label i
+{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #161618;
+    border: 2px solid #ffffff55;
+}
+
+.record:hover .vinyl
+{
+    transform: translateY(-4px) rotate(-3deg);
+    box-shadow: 0 16px 28px #0000001a;
+}
+
+.record-info
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.record-info strong
+{
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.record-info > span
+{
+    font-size: 11px;
+    color: #86868b;
+    white-space: nowrap;
+}
+
+#status
+{
+    min-height: 24px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: #6e6e73;
+}
+
+footer
+{
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e7;
+    font-size: 12px;
+    color: #86868b;
+}
+
+body.listening
+{
+    overflow: hidden;
+}
+
+#experience
+{
+    position: fixed;
+    inset: 0;
+    background: #050507;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s, visibility 1s;
+    z-index: 10;
+    color: #fff;
+    color-scheme: dark;
+}
+
+#experience.open
+{
+    opacity: 1;
+    visibility: visible;
+}
+
+#lights
+{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.caption
+{
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: #999;
+}
+
+.exit
+{
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: #ccc;
+    border: 1px solid #444;
+    border-radius: 30px;
+    padding: 10px 24px;
+    background: transparent;
+}
+
+.controls
+{
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    color: #bbb;
+    font-size: 13px;
+}
+
+.controls button
+{
+    color: #ddd;
+    border: 1px solid #444;
+    border-radius: 30px;
+    padding: 7px 16px;
+    background: transparent;
+}
+
+.controls button:disabled
+{
+    opacity: 0.4;
+    cursor: wait;
+}
+
+.controls label
+{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+#gentle
+{
+    accent-color: #b2a4cd;
+}
+
+@media (max-width: 600px)
+{
+    main
+    {
+        padding: 24px 22px 48px;
+    }
+
+    nav.site-nav
+    {
+        margin-bottom: 80px;
+    }
+
+    nav.site-nav a
+    {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .intro
+    {
+        margin-bottom: 64px;
+    }
+
+    .records
+    {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .record
+    {
+        max-width: 340px;
+        margin: auto;
+    }
+
+    .project-video
+    {
+        border-radius: 14px;
+    }
+
+    .caption
+    {
+        left: 20px;
+    }
+
+    .controls
+    {
+        left: 16px;
+        right: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+    nav.site-nav a,
+    .record,
+    .vinyl
+    {
+        transition: none;
+    }
+
+    .record:hover .vinyl
+    {
+        transform: none;
+    }
+
+    #experience
+    {
+        transition-duration: 0.2s;
+    }
+}
