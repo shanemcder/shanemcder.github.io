@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Projects by Shane McDermott — software, interactive audio, and virtual reality.">
+    <meta name="description" content="St. Augustine Forts in VR — a project by Shane McDermott.">
     <title>Projects — Shane McDermott</title>
 
     <style>
@@ -18,12 +18,25 @@
             box-sizing: border-box;
         }
 
+        html
+        {
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+        }
+
         body
         {
             margin: 0;
             color: #181818;
             background: #fafafa;
             line-height: 1.6;
+        }
+
+        main
+        {
+            max-width: 850px;
+            padding: 72px 24px 96px;
+            margin: auto;
         }
 
         a
@@ -35,102 +48,6 @@
         a:hover
         {
             color: #777;
-        }
-
-        h1
-        {
-            font-size: clamp(44px, 9vw, 82px);
-            letter-spacing: -.065em;
-            line-height: 1.04;
-            margin: 0 0 24px;
-        }
-
-        .intro
-        {
-            font-size: 21px;
-            max-width: 610px;
-            color: #555;
-            margin: 0 0 64px;
-        }
-
-        .projects
-        {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 40px 32px;
-            margin-bottom: 64px;
-        }
-
-        article
-        {
-            border-top: 1px solid #d9d9d9;
-            padding-top: 20px;
-        }
-
-        .category
-        {
-            margin: 0 0 12px;
-            color: #888;
-            font-size: 11px;
-            letter-spacing: .09em;
-            text-transform: uppercase;
-        }
-
-        h2
-        {
-            font-size: 23px;
-            font-weight: 500;
-            letter-spacing: -.035em;
-            line-height: 1.2;
-            margin: 0 0 14px;
-        }
-
-        article p
-        {
-            font-size: 15px;
-            color: #555;
-            margin: 0 0 18px;
-        }
-
-        .tools
-        {
-            color: #888;
-            font-size: 12px;
-        }
-
-        .project-link
-        {
-            display: inline-block;
-            margin-top: 16px;
-            font-size: 14px;
-        }
-
-        .more
-        {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            font-size: 14px;
-            margin-bottom: 80px;
-        }
-
-        footer
-        {
-            color: #888;
-            font-size: 14px;
-        }
-
-        html
-        {
-            overflow-y: scroll;
-            scrollbar-gutter: stable;
-        }
-
-        main
-        {
-            max-width: 850px;
-            padding: 72px 24px 96px;
-            margin: auto;
         }
 
         nav.site-nav
@@ -168,6 +85,72 @@
             outline-offset: 6px;
         }
 
+        h1
+        {
+            font-size: clamp(44px, 9vw, 82px);
+            letter-spacing: -0.065em;
+            line-height: 1.04;
+            margin: 0 0 24px;
+        }
+
+        .intro
+        {
+            font-size: 21px;
+            max-width: 610px;
+            color: #555;
+            margin: 0 0 64px;
+        }
+
+        .projects
+        {
+            margin-bottom: 80px;
+        }
+
+        article
+        {
+            border-top: 1px solid #d9d9d9;
+            padding-top: 20px;
+        }
+
+        .category
+        {
+            margin: 0 0 12px;
+            color: #888;
+            font-size: 11px;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        h2
+        {
+            font-size: 27px;
+            font-weight: 500;
+            letter-spacing: -0.035em;
+            line-height: 1.2;
+            margin: 0 0 20px;
+        }
+
+        article p
+        {
+            max-width: 650px;
+            font-size: 16px;
+            color: #555;
+            margin: 0 0 18px;
+        }
+
+        .tools
+        {
+            color: #888;
+            font-size: 13px;
+            margin-top: 24px;
+        }
+
+        footer
+        {
+            color: #888;
+            font-size: 14px;
+        }
+
         @media (max-width: 600px)
         {
             main
@@ -178,12 +161,6 @@
             nav.site-nav
             {
                 margin-bottom: 85px;
-            }
-
-            .projects
-            {
-                grid-template-columns: 1fr;
-                gap: 32px;
             }
 
             .intro
@@ -205,69 +182,22 @@
 
         <header>
             <h1>Projects.</h1>
-            <p class="intro">Web applications, Android tools, and interactive experiences—built around usable interfaces, connected data, and real-time interaction.</p>
+            <p class="intro">Selected work.</p>
         </header>
 
         <section class="projects" aria-label="Selected projects">
             <article>
-                <p class="category">Web / Application development</p>
-                <h2>EventMaster</h2>
-                <p>An event-management application with registration, login, administrator event tools, and attendee RSVPs.</p>
-                <p>Connected interface workflows to MySQL-backed operations and organized attendee responses for administrators.</p>
-                <div class="tools">PHP · MySQL · JavaScript · HTML · CSS</div>
-            </article>
+                <p class="category">Virtual reality</p>
 
-            <article>
-                <p class="category">Android / Persistent data</p>
-                <h2>Taskmaster</h2>
-                <p>A daily task planner with task creation and editing, categories, duration estimates, and progress tracking.</p>
-                <p>Built persistent storage with Room, task lists with RecyclerView, and navigation across six activities.</p>
-                <div class="tools">Java · Android · Room · RecyclerView</div>
-            </article>
+                <h2>St. Augustine Forts in VR</h2>
 
-            <article>
-                <p class="category">Creative coding / Real-time interaction</p>
-                <h2>Audio-reactive visuals</h2>
-                <p>A browser listening experience where waveform and frequency analysis drive animated geometry and color.</p>
-                <p>Implemented playback controls, smooth transitions, keyboard navigation, and reduced-motion options. Resolved audio-loading and format issues while developing the experience.</p>
-                <div class="tools">JavaScript · Canvas · Web Audio API</div>
-                <a class="project-link" href="sound.html">Open the listening experience ↗</a>
-            </article>
+                <p>Recruited by UCF’s Arts and Humanities department to help finish an educational, interactive VR experience exploring the St. Augustine forts.</p>
 
-            <article>
-                <p class="category">Virtual reality / Performance</p>
-                <h2>St. Augustine Forts</h2>
-                <p>An interactive VR exploration of historic forts. Served as lead 3D modeler and Unity developer.</p>
-                <p>Created environment assets, implemented travel between forts, and optimized assets toward a 90 FPS target.</p>
-                <div class="tools">Unity · C# · Maya · VR</div>
-                <a
-                    class="project-link"
-                    href="https://www.artstation.com/shanemcder"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    View my 3D work ↗
-                </a>
+                <p>Worked with a team of seven people. Handled 3D modeling of the fort and scene elements, helped clean up unused project files, and contributed to programming the boat elements.</p>
+
+                <div class="tools">Unity · Maya · VR</div>
             </article>
         </section>
-
-        <div class="more">
-            <a
-                href="https://github.com/shanemcder"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                More on GitHub ↗
-            </a>
-
-            <a
-                href="https://www.artstation.com/shanemcder"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                3D work on ArtStation ↗
-            </a>
-        </div>
 
         <footer>© Shane McDermott</footer>
     </main>
