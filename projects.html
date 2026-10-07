@@ -10,13 +10,11 @@
     >
 
     <title>Projects — Shane McDermott</title>
-
     <link rel="stylesheet" href="apple.css">
 </head>
 
 <body>
     <main>
-
         <nav class="site-nav" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="projects.html" aria-current="page">Projects</a>
@@ -27,9 +25,83 @@
         </header>
 
         <section class="projects">
+            <article>
+                <p class="category">
+                    Current · Full-Stack Development
+                </p>
 
+                <h2>TestPressing</h2>
 
-            <!-- CENTURY CENTURY -->
+                <p>
+                    TestPressing is a web platform for music creators to share
+                    works-in-progress, get feedback, and showcase their audio
+                    work. Built with React and TypeScript, it includes audio
+                    uploads and playback, public portfolios with personal
+                    links, friends, and activity updates.
+                </p>
+
+                <p>
+                    Account features include login and signup, email
+                    verification, password recovery, and password changes.
+                    The platform is still in early development, and the
+                    backend occasionally experiences downtime as I work
+                    on its reliability.
+                </p>
+
+                <p>
+                    The idea grew out of a portfolio website I built for the
+                    audio work I create in my free time. I’m also part of
+                    audio engineering Discord communities, where people
+                    typically share demos by uploading clips directly into
+                    the chat. Those clips get buried quickly, and sharing
+                    unfinished ideas can feel uncomfortable when you don’t
+                    know or trust everyone in the server.
+                </p>
+
+                <p>
+                    I wanted a more intentional way to share work with
+                    others, while giving audio engineers a place to showcase
+                    their strongest moments without asking someone to
+                    listen through an entire track. That’s why TestPressing
+                    combines sharing works-in-progress with a public
+                    portfolio that creators can send through a personal link.
+                </p>
+
+                <p>
+                    I also built it to encourage creativity and help artists
+                    finish what they start. In my own experience, putting a
+                    demo out there can be what moves it forward. Listening
+                    to something you’ve shared often makes you realize it
+                    doesn’t sound as unfinished as you thought, while
+                    feedback from friends helps you figure out where to
+                    take it next.
+                </p>
+
+                <p class="tools">
+                    React · TypeScript · Audio Playback · Authentication ·
+                    Public Portfolios
+                </p>
+
+                <p class="video-link">
+                    <a
+                        href="https://testpressing.net"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Visit TestPressing ↗
+                    </a>
+                </p>
+
+                <p class="video-link">
+                    <a
+                        href="https://testpressing.net/shane"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        View my TestPressing portfolio ↗
+                    </a>
+                </p>
+            </article>
 
             <article>
                 <p class="category">
@@ -39,7 +111,8 @@
                 <h2>Century Century</h2>
 
                 <p>
-                    Originally started as a website to showcase my music, I am working on making it a platform for users to share their work-in-progress music securely with friends, as well as create a portfolio of their work.
+                    A personal website I built to showcase the music and
+                    audio work I create in my free time.
                 </p>
 
                 <p>
@@ -62,9 +135,6 @@
                     </a>
                 </p>
             </article>
-
-
-            <!-- ST. AUGUSTINE FORTS -->
 
             <article>
                 <p class="category">
@@ -91,7 +161,6 @@
                 </p>
 
                 <div class="project-gallery">
-
                     <figure>
                         <img
                             src="st-augustine-team.jpg"
@@ -107,7 +176,6 @@
                             loading="lazy"
                         >
                     </figure>
-
                 </div>
 
                 <div class="project-video">
@@ -130,9 +198,6 @@
                     </a>
                 </p>
             </article>
-
-
-            <!-- TASKMASTER -->
 
             <article>
                 <p class="category">
@@ -159,11 +224,7 @@
                     Android Studio · Java · Room · RecyclerView
                 </p>
 
-
-                <!-- TASKMASTER CAROUSEL -->
-
                 <div class="taskmaster-carousel">
-
                     <button
                         class="carousel-arrow carousel-prev"
                         type="button"
@@ -173,13 +234,11 @@
                     </button>
 
                     <div class="carousel-screen">
-
                         <img
                             id="taskmaster-image"
                             src="taskmaster-1.png"
                             alt="Taskmaster Android application screenshot 1"
                         >
-
                     </div>
 
                     <button
@@ -189,9 +248,7 @@
                     >
                         ›
                     </button>
-
                 </div>
-
 
                 <div
                     class="carousel-dots"
@@ -253,11 +310,7 @@
                         aria-label="Screenshot 8"
                     ></button>
                 </div>
-
             </article>
-
-
-            <!-- FITKNIGHT -->
 
             <article>
                 <p class="category">
@@ -284,18 +337,10 @@
                     React · TypeScript · Node.js · Express · MongoDB
                 </p>
             </article>
-
         </section>
 
-
-        <footer>
-            © Shane McDermott
-        </footer>
-
+        <footer>© Shane McDermott</footer>
     </main>
-
-
-    <!-- TASKMASTER CAROUSEL SCRIPT -->
 
     <script>
         const taskmasterImages = [
@@ -322,7 +367,6 @@
 
         const carouselDots =
             document.querySelectorAll(".carousel-dot");
-
 
         function showTaskmasterSlide(index)
         {
@@ -354,31 +398,23 @@
             });
         }
 
-
         previousButton.addEventListener("click", () =>
         {
             showTaskmasterSlide(currentTaskmasterSlide - 1);
         });
-
 
         nextButton.addEventListener("click", () =>
         {
             showTaskmasterSlide(currentTaskmasterSlide + 1);
         });
 
-
         carouselDots.forEach((dot) =>
         {
             dot.addEventListener("click", () =>
             {
-                showTaskmasterSlide(
-                    Number(dot.dataset.slide)
-                );
+                showTaskmasterSlide(Number(dot.dataset.slide));
             });
         });
-
-
-        /* SWIPE SUPPORT */
 
         let touchStartX = 0;
 
@@ -386,40 +422,30 @@
             "touchstart",
             (event) =>
             {
-                touchStartX =
-                    event.changedTouches[0].screenX;
+                touchStartX = event.changedTouches[0].screenX;
             },
             { passive: true }
         );
-
 
         taskmasterImage.addEventListener(
             "touchend",
             (event) =>
             {
-                const touchEndX =
-                    event.changedTouches[0].screenX;
-
-                const distance =
-                    touchEndX - touchStartX;
+                const touchEndX = event.changedTouches[0].screenX;
+                const distance = touchEndX - touchStartX;
 
                 if (distance > 50)
                 {
-                    showTaskmasterSlide(
-                        currentTaskmasterSlide - 1
-                    );
+                    showTaskmasterSlide(currentTaskmasterSlide - 1);
                 }
 
                 if (distance < -50)
                 {
-                    showTaskmasterSlide(
-                        currentTaskmasterSlide + 1
-                    );
+                    showTaskmasterSlide(currentTaskmasterSlide + 1);
                 }
             },
             { passive: true }
         );
     </script>
-
 </body>
 </html>
