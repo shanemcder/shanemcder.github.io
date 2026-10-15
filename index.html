@@ -32,14 +32,58 @@ html { scroll-behavior:smooth; }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
   </style>
  </head>
+
+<script>
+document.addEventListener("DOMContentLoaded", () =>
+{
+    const elements = document.querySelectorAll(
+        "header, .home-contact, .projects-heading, .project-tabs, .project-panel article"
+    );
+
+    const observer = new IntersectionObserver(
+        (entries) =>
+        {
+            entries.forEach((entry) =>
+            {
+                entry.target.classList.toggle(
+                    "is-visible",
+                    entry.isIntersecting
+                );
+            });
+        },
+        {
+            threshold: 0,
+            rootMargin: "-5% 0px -5% 0px"
+        }
+    );
+
+    elements.forEach((element) =>
+    {
+        element.classList.add("scroll-fade");
+
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+        {
+            element.classList.add("fade-ready");
+            observer.observe(element);
+        }
+    });
+});
+</script>
+
  <body>
   <main id="top">
    <header>
     <h1>
-     Shane McDermott.
+     Shane McDermott
     </h1>
     <p class="intro">
-     Multimodal developer interested in creating immersive experiences.
+     Hi, my name is Shane. I'm a software developer and UCF Computer Science graduate.
+    </p>
+    <p class="intro">
+     I work on projects that interest me.
+    </p>
+    <p class="intro">
+     Right, now I am working on audio plugins for DAWs. 
     </p>
    </header>
    <section class="home-contact" id="contact">
@@ -80,7 +124,7 @@ html { scroll-behavior:smooth; }
       </p>
       <h2 class="project-title-with-icon">
        <img alt="" aria-hidden="true" class="project-title-icon" src="hue-app-icon.png"/>
-       Hue
+       Hue (app)
       </h2>
       <p>
        Hue is an iPhone game I built with SwiftUI. I had the idea for this game for a while now. The object is to match the color in the middle of the screen to the name of the color appearing on screen. As you hold the screen down, the color in the middle morphs through the spectrum. Release once you match the color to move on to the next level.
@@ -96,6 +140,9 @@ html { scroll-behavior:smooth; }
       </p>
       <p>
        Next, I want to add music and continue improving the visuals.
+      </p>
+      <p>
+        Will be on the app store soon!
       </p>
       <p class="tools">
        Swift · SwiftUI · iOS · Game Development · Animation
@@ -183,9 +230,14 @@ html { scroll-behavior:smooth; }
       <p class="category">
        Current · Music · Web Development · Audio Software
       </p>
-      <h2>
-       CenturyCenturyMusic.com
-      </h2>
+      <h2 class="project-title-with-icon">
+    <img
+        src="century-century-logo.png"
+        alt="Century Century logo"
+        class="project-title-icon"
+    >
+    CenturyCenturyMusic.com
+</h2>
       <p>
        Century Century is my music website, where I share my original music,
                     write a blog about music and creative technology, and publish audio
