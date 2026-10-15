@@ -146,20 +146,23 @@ h2 {
 
 /* HOME */
 
+.intro-group {
+  max-width: 720px;
+  margin-bottom: 56px;
+}
+
 .intro {
-  max-width: 620px;
-
+  max-width: 720px;
   font-size: clamp(19px, 2.5vw, 24px);
-
   font-weight: 400;
-
   letter-spacing: -0.025em;
-
   line-height: 1.5;
-
   color: #6e6e73;
+  margin: 0 0 10px;
+}
 
-  margin: 0 0 88px;
+.intro:last-child {
+  margin-bottom: 0;
 }
 
 .find-me {
@@ -461,8 +464,12 @@ footer {
     font-size: 44px;
   }
 
+  .intro-group {
+    margin-bottom: 44px;
+  }
+
   .intro {
-    margin-bottom: 64px;
+    margin-bottom: 10px;
   }
 
   .projects {
@@ -587,4 +594,12 @@ body {
     transform: none;
     transition: none;
   }
+}
+
+/* Keep introductory paragraphs together, including without a wrapper */
+header .intro + .intro {
+  margin-top: 0;
+}
+header .intro:last-of-type {
+  margin-bottom: 0;
 }
