@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <meta content="Shane McDermott — software, music, and creative technology projects." name="description"/>
-  <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Shane McDermott — software, music, and creative technology projects." name="description"/>
+<title>
    Shane McDermott — Projects
   </title>
-  <link href="apple.css" rel="stylesheet"/>
-  <style>
+<link href="apple.css" rel="stylesheet"/>
+<style>
    .project-title-with-icon { display: flex; align-items: center; gap: 12px; }
         .project-title-icon { width: 44px; height: 44px; object-fit: contain; flex-shrink: 0; border-radius: 10px; }
         @media (max-width: 600px) { .project-title-icon { width: 38px; height: 38px; } }
@@ -31,8 +32,7 @@ header .intro { font-size:21px; max-width:610px; color:#555; margin:0 0 65px; }
 html { scroll-behavior:smooth; }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
   </style>
- </head>
-
+</head>
 <script>
 document.addEventListener("DOMContentLoaded", () =>
 {
@@ -69,123 +69,116 @@ document.addEventListener("DOMContentLoaded", () =>
     });
 });
 </script>
-
- <body>
-  <main id="top">
-
+<body>
+<main id="top">
 <header>
-    <h1>Shane McDermott</h1>
-
-    <div class="intro-group">
-        <p class="intro">
+<h1>Shane McDermott</h1>
+<div class="intro-group">
+<p class="intro">
             Hi, I'm Shane, a software developer and UCF Computer Science graduate from Orlando, Florida.
         </p>
-
-        <p class="intro">
+<p class="intro">
             I like making things, especially when they bring together my interests in technology, music, and design. I always get inspired by art, and I see software as another art form.
         </p>
-
-        <p class="intro">
+<p class="intro">
             I make music in my free time, which has inspired my interest in audio software development. Right now, I'm building plugins for digital audio workstations (DAWs) and exploring ways to make music production more accessible to children.
         </p>
-
-        <p class="intro">
-            Feel free to reach out for collaborations or project inquiries.
+<p class="intro">
+            I am always eager to learn new technologies. Feel free to reach out for collaborations or project inquiries.
         </p>
-    </div>
+</div>
 </header>
-
-   <section class="home-contact" id="contact">
-    <h2>
+<section class="home-contact" id="contact">
+<h2>
      Find me
     </h2>
-    <div class="links">
-     <a href="mailto:spmcder@gmail.com">
+<div class="links">
+<a href="mailto:spmcder@gmail.com">
       Email ↗
      </a>
-     <a download="Shane_McDermott_Resume.pdf" href="resume.pdf">
+<a download="Shane_McDermott_Resume.pdf" href="resume.pdf">
       Resume ↓
      </a>
-     <a href="https://github.com/shanemcder" rel="noopener noreferrer" target="_blank">
+<a href="https://github.com/shanemcder" rel="noopener noreferrer" target="_blank">
       GitHub ↗
      </a>
-     <a href="https://www.artstation.com/shanemcder" rel="noopener noreferrer" target="_blank">
+<a href="https://www.artstation.com/shanemcder" rel="noopener noreferrer" target="_blank">
       ArtStation ↗
      </a>
-    </div>
-   </section>
-   <section class="projects" id="projects">
-    <h2 class="projects-heading">
+</div>
+</section>
+<section class="projects" id="projects">
+<h2 class="projects-heading">
      Projects
     </h2>
-    <div aria-label="Project categories" class="project-tabs" role="tablist">
-     <button aria-controls="panel-featured" aria-selected="true" class="project-tab" id="tab-featured" role="tab" tabindex="0" type="button">
+<div aria-label="Project categories" class="project-tabs" role="tablist">
+<button aria-controls="panel-featured" aria-selected="true" class="project-tab" id="tab-featured" role="tab" tabindex="0" type="button">
       Featured Projects
      </button>
-     <button aria-controls="panel-other" aria-selected="false" class="project-tab" id="tab-other" role="tab" tabindex="-1" type="button">
+<button aria-controls="panel-other" aria-selected="false" class="project-tab" id="tab-other" role="tab" tabindex="-1" type="button">
       Other Projects
      </button>
-    </div>
-    <div aria-labelledby="tab-featured" class="project-panel" id="panel-featured" role="tabpanel">
-     <article>
-      <p class="category">
+</div>
+<div aria-labelledby="tab-featured" class="project-panel" id="panel-featured" role="tabpanel">
+<article class="project-side-by-side"><div class="project-content">
+<p class="category">
        October 2026 · iOS Game Development
       </p>
-      <h2 class="project-title-with-icon">
-       <img alt="" aria-hidden="true" class="project-title-icon" src="hue-app-icon.png"/>
+<h2 class="project-title-with-icon">
+<img alt="" aria-hidden="true" class="project-title-icon" src="hue-app-icon.png"/>
        Hue (app)
       </h2>
-      <p>
+<p>
        Hue is an iPhone game I built with SwiftUI. I had the idea for this game for a while now. The object is to match the color in the middle of the screen to the name of the color appearing on screen. As you hold the screen down, the color in the middle morphs through the spectrum. Release once you match the color to move on to the next level.
       </p>
-      <p>
+<p>
        As you progress, a more diverse set of color names unlocks. There are milestone animations at levels 10, 20, 30, and so on, and the visuals become increasingly dreamlike. I wanted to make not only a fun game, but also something captivating and entrancing—a relaxing little brain break.
       </p>
-      <p>
+<p>
        I also think Hue is a great learning tool for kids discovering new colors.
       </p>
-      <p>
+<p>
        One of the hardest parts of the project was learning to use Metal shaders in Xcode to get the central colored blob looking right.
       </p>
-      <p>
+<p>
        Next, I want to add music and continue improving the visuals.
       </p>
-      <p>
+<p>
         Will be on the app store soon!
       </p>
-      <p class="tools">
+<p class="tools">
        Swift · SwiftUI · iOS · Game Development · Animation
-      </p>
-      <div class="hue-demo-video" style="width:100%;max-width:340px;margin:24px auto;">
-       <video aria-label="hue gameplay demonstration" controls="" playsinline="" preload="metadata" style="display:block;width:100%;aspect-ratio:9 / 16;object-fit:contain;border-radius:12px;background:#e9dfcd;">
-        <source src="hue-demo.mp4" type="video/mp4"/>
+      </p><p class="video-link"><a href="https://shanemcder.github.io/hue/" rel="noopener noreferrer" target="_blank">hue website ↗</a></p>
+
+</div><div class="project-media"><div class="hue-demo-video" style="width:100%;max-width:340px;margin:24px auto;">
+<video aria-label="hue gameplay demonstration" controls="" playsinline="" preload="metadata" style="display:block;width:100%;aspect-ratio:9 / 16;object-fit:contain;border-radius:12px;background:#e9dfcd;">
+<source src="hue-demo.mp4" type="video/mp4"/>
         Your browser does not support embedded video.
        </video>
-      </div>
-     </article>
-     <article>
-      <p class="category">
+</div></div></article>
+<article>
+<p class="category">
        Current · Full-Stack Development
       </p>
-      <h2 class="project-title-with-icon">
-       <img alt="" aria-hidden="true" class="project-title-icon" src="test-pressing-disc.png"/>
+<h2 class="project-title-with-icon">
+<img alt="" aria-hidden="true" class="project-title-icon" src="test-pressing-disc.png"/>
        TestPressing.net
       </h2>
-      <p>
+<p>
        TestPressing is a web platform for music creators to share
                     works-in-progress, get feedback, and showcase their audio
                     work. Built with React and TypeScript, it includes audio
                     uploads and playback, public portfolios with personal
                     links, friends, and activity updates.
       </p>
-      <p>
+<p>
        Account features include login and signup, email
                     verification, password recovery, and password changes.
                     The platform is still in early development, and the
                     backend occasionally experiences downtime as I work
                     on its reliability.
       </p>
-      <p>
+<p>
        The idea grew out of a portfolio website I built for the
                     audio work I create in my free time. I’m also part of
                     audio engineering Discord communities, where people
@@ -194,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () =>
                     unfinished ideas can feel uncomfortable when you don’t
                     know or trust everyone in the server.
       </p>
-      <p>
+<p>
        I wanted a more intentional way to share work with
                     others, while giving audio engineers a place to showcase
                     their strongest moments without asking someone to
@@ -202,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () =>
                     combines sharing works-in-progress with a public
                     portfolio that creators can send through a personal link.
       </p>
-      <p>
+<p>
        I also built it to encourage creativity and help artists
                     finish what they start. In my own experience, putting a
                     demo out there can be what moves it forward. Listening
@@ -211,217 +204,213 @@ document.addEventListener("DOMContentLoaded", () =>
                     feedback from friends helps you figure out where to
                     take it next.
       </p>
-      <p>
+<p>
        The minimalistic design is intentional: I wanted the main focus
                     to be around the vinyls displayed on each profile to intrigue the viewer,
                     prompting them to click on them and hear the music. Users can connect their soundcloud link
                     in order to garner more followers.
       </p>
-      <p>
+<p>
        Working on getting 100 users signed up.
       </p>
-      <p class="tools">
+<p class="tools">
        React · TypeScript · Audio Playback · Authentication ·
                     Public Portfolios
       </p>
-      <p class="video-link">
-       <a href="https://testpressing.net" rel="noopener noreferrer" target="_blank">
+<p class="video-link">
+<a href="https://testpressing.net" rel="noopener noreferrer" target="_blank">
         Visit TestPressing (May take a few seconds to start)↗
        </a>
-      </p>
-      <p class="video-link">
-       <a href="https://testpressing.net/shane" rel="noopener noreferrer" target="_blank">
+</p>
+<p class="video-link">
+<a href="https://testpressing.net/shane" rel="noopener noreferrer" target="_blank">
         View my TestPressing portfolio ↗
        </a>
-      </p>
-     </article>
-     <article>
-      <p class="category">
+</p>
+</article>
+<article>
+<p class="category">
        Current · Music · Web Development · Audio Software
       </p>
-      <h2 class="project-title-with-icon">
-    <img
-        src="century-century-logo.png"
-        alt="Century Century logo"
-        class="project-title-icon"
-    >
+<h2 class="project-title-with-icon">
+<img alt="Century Century logo" class="project-title-icon" src="century-century-logo.png"/>
     CenturyCenturyMusic.com
 </h2>
-      <p>
+<p>
        Century Century is my music website, where I share my original music,
                     write a blog about music and creative technology, and publish audio
                     plugins I've developed for musicians and producers to download.
       </p>
-      <p>
+<p>
        The site brings together my interests in music production and
                     software development, with a dedicated software section for
                     projects including ChordPalette, TempoLock, and Patina.
       </p>
-      <p class="tools">
+<p class="tools">
        Music Production · Web Development · Audio Plugins · C++ · JUCE
       </p>
-      <p class="video-link">
-       <a href="https://centurycenturymusic.com" rel="noopener noreferrer" target="_blank">
+<p class="video-link">
+<a href="https://centurycenturymusic.com" rel="noopener noreferrer" target="_blank">
         Visit Century Century ↗
        </a>
-      </p>
-     </article>
-     <article>
-      <p class="category">
+</p>
+</article>
+<article>
+<p class="category">
        April 2026 · Virtual Reality · Unity · 3D Modeling
       </p>
-      <h2>
+<h2>
        St. Augustine Forts in VR
       </h2>
-      <p>
+<p>
        Recruited by the UCF Arts and Humanities department
                     to finish an educational and interactive St. Augustine
                     Forts experience in VR.
       </p>
-      <p>
+<p>
        Worked with a team of seven people, handling 3D modeling
                     of the fort and scene elements, helping clean up junk
                     files in the project, and helping with programming
                     boat elements.
       </p>
-      <p class="tools">
+<p class="tools">
        Unity · C# · Maya · 3D Modeling · VR
       </p>
-      <div class="project-gallery">
-       <figure>
-        <img alt="St. Augustine Forts in VR team presentation" loading="lazy" src="st-augustine-team.jpg"/>
-       </figure>
-       <figure>
-        <img alt="St. Augustine Forts in VR demonstration using a VR headset" loading="lazy" src="st-augustine-demo.jpg"/>
-       </figure>
-      </div>
-      <div class="project-video">
-       <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/9c4WUWfBVE4" title="St. Augustine Forts in VR">
-       </iframe>
-      </div>
-      <p class="video-link">
-       <a href="https://www.youtube.com/watch?v=9c4WUWfBVE4" rel="noopener noreferrer" target="_blank">
+<div class="project-gallery">
+<figure>
+<img alt="St. Augustine Forts in VR team presentation" loading="lazy" src="st-augustine-team.jpg">
+</img></figure>
+<figure>
+<img alt="St. Augustine Forts in VR demonstration using a VR headset" loading="lazy" src="st-augustine-demo.jpg"/>
+</figure>
+</div>
+<div class="project-video">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/9c4WUWfBVE4" title="St. Augustine Forts in VR">
+</iframe>
+</div>
+<p class="video-link">
+<a href="https://www.youtube.com/watch?v=9c4WUWfBVE4" rel="noopener noreferrer" target="_blank">
         Watch on YouTube ↗
        </a>
-      </p>
-     </article>
-    </div>
-    <div aria-labelledby="tab-other" class="project-panel" hidden="" id="panel-other" role="tabpanel">
-     <article>
-      <p class="category">
+</p>
+</article>
+</div>
+<div aria-labelledby="tab-other" class="project-panel" hidden="" id="panel-other" role="tabpanel">
+<article class="project-side-by-side"><div class="project-content">
+<p class="category">
        October 2026 · iOS App Development
       </p>
-      <h2>
+<h2>
        TextShield
       </h2>
-      <p>
+<p>
        TextShield is an iPhone message-filtering app I built with Swift
                     and SwiftUI to help users filter unwanted text messages. Users
                     can maintain a custom list of blocked words and filter messages
                     from unknown senders that contain those terms.
       </p>
-      <p>
+<p>
        The app uses Apple's message filtering extension to evaluate
                     incoming messages, with a simple interface for managing filter
                     rules. I developed and tested it on an iPhone and am exploring
                     distribution through TestFlight.
       </p>
-      <p class="tools">
+<p class="tools">
        Swift · SwiftUI · iOS · Message Filtering · Xcode
       </p>
-      <div class="project-gallery">
-       <figure style="max-width: 300px; margin: 0 auto;">
-        <img alt="TextShield iPhone app screenshot" loading="lazy" src="textshield-screenshot.png" style="display:block;width:100%;height:auto;aspect-ratio:9 / 16;object-fit:contain;border-radius:22px;"/>
-       </figure>
-      </div>
-      <p class="video-link">
-       <a href="TEXTSHIELD_TESTFLIGHT_URL" rel="noopener noreferrer" target="_blank">
+
+<p class="video-link">
+<a href="TEXTSHIELD_TESTFLIGHT_URL" rel="noopener noreferrer" target="_blank">
         Download TextShield via TestFlight ↗
        </a>
-      </p>
-     </article>
-     <article>
-      <p class="category">
+</p>
+</div><div class="project-media"><div class="project-gallery">
+<figure style="max-width: 300px; margin: 0 auto;">
+<img alt="TextShield iPhone app screenshot" loading="lazy" src="textshield-screenshot.png" style="display:block;width:100%;height:auto;aspect-ratio:9 / 16;object-fit:contain;border-radius:22px;"/>
+</figure>
+</div></div></article>
+<article class="project-side-by-side"><div class="project-content">
+<p class="category">
        November 2025 · Android · Mobile Development
       </p>
-      <h2>
+<h2>
        Taskmaster
       </h2>
-      <p>
+<p>
        A native Android productivity application designed around
                     creating reusable tasks and choosing which tasks to focus
                     on each day.
       </p>
-      <p>
+<p>
        Built task creation and editing, categories, estimated
                     durations, daily task selection, completion tracking,
                     remaining-time calculations, and persistent local storage.
                     The interface also includes custom task states and a penguin
                     mascot that changes when the user completes their day.
       </p>
-      <p class="tools">
+<p class="tools">
        Android Studio · Java · Room · RecyclerView
       </p>
-      <div class="taskmaster-carousel">
-       <button aria-label="Previous Taskmaster screenshot" class="carousel-arrow carousel-prev" type="button">
+
+
+</div><div class="project-media"><div class="taskmaster-carousel">
+<button aria-label="Previous Taskmaster screenshot" class="carousel-arrow carousel-prev" type="button">
         ‹
        </button>
-       <div class="carousel-screen">
-        <img alt="Taskmaster Android application screenshot 1" id="taskmaster-image" src="taskmaster-1.png"/>
-       </div>
-       <button aria-label="Next Taskmaster screenshot" class="carousel-arrow carousel-next" type="button">
+<div class="carousel-screen">
+<img alt="Taskmaster Android application screenshot 1" id="taskmaster-image" src="taskmaster-1.png"/>
+</div>
+<button aria-label="Next Taskmaster screenshot" class="carousel-arrow carousel-next" type="button">
         ›
        </button>
-      </div>
-      <div aria-label="Taskmaster screenshots" class="carousel-dots">
-       <button aria-label="Screenshot 1" class="carousel-dot active" data-slide="0" type="button">
-       </button>
-       <button aria-label="Screenshot 2" class="carousel-dot" data-slide="1" type="button">
-       </button>
-       <button aria-label="Screenshot 3" class="carousel-dot" data-slide="2" type="button">
-       </button>
-       <button aria-label="Screenshot 4" class="carousel-dot" data-slide="3" type="button">
-       </button>
-       <button aria-label="Screenshot 5" class="carousel-dot" data-slide="4" type="button">
-       </button>
-       <button aria-label="Screenshot 6" class="carousel-dot" data-slide="5" type="button">
-       </button>
-       <button aria-label="Screenshot 7" class="carousel-dot" data-slide="6" type="button">
-       </button>
-       <button aria-label="Screenshot 8" class="carousel-dot" data-slide="7" type="button">
-       </button>
-      </div>
-     </article>
-     <article>
-      <p class="category">
+</div><div aria-label="Taskmaster screenshots" class="carousel-dots">
+<button aria-label="Screenshot 1" class="carousel-dot active" data-slide="0" type="button">
+</button>
+<button aria-label="Screenshot 2" class="carousel-dot" data-slide="1" type="button">
+</button>
+<button aria-label="Screenshot 3" class="carousel-dot" data-slide="2" type="button">
+</button>
+<button aria-label="Screenshot 4" class="carousel-dot" data-slide="3" type="button">
+</button>
+<button aria-label="Screenshot 5" class="carousel-dot" data-slide="4" type="button">
+</button>
+<button aria-label="Screenshot 6" class="carousel-dot" data-slide="5" type="button">
+</button>
+<button aria-label="Screenshot 7" class="carousel-dot" data-slide="6" type="button">
+</button>
+<button aria-label="Screenshot 8" class="carousel-dot" data-slide="7" type="button">
+</button>
+</div></div></article>
+<article>
+<p class="category">
        December 2024 · Full-Stack Web Development
       </p>
-      <h2>
+<h2>
        FitKnight
       </h2>
-      <p>
+<p>
        A full-stack fitness web application built around
                     challenges, rankings, user profiles, and social fitness
                     competition.
       </p>
-      <p>
+<p>
        Developed as a team project with a React frontend and
                     Express backend, using MongoDB for application data.
                     The platform allows users to participate in fitness
                     challenges, track their activity, view rankings, and
                     interact with personalized profiles.
       </p>
-      <p class="tools">
+<p class="tools">
        React · TypeScript · Node.js · Express · MongoDB
       </p>
-     </article>
-    </div>
-   </section>
-   <footer>
+</article>
+</div>
+</section>
+<footer>
     © Shane McDermott
    </footer>
-  </main>
-  <script>
+</main>
+<script>
    const taskmasterImages = [
             "taskmaster-1.png",
             "taskmaster-2.png",
@@ -507,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () =>
             { passive: true }
         );
   </script>
-  <script>
+<script>
    (() => {
             const tabs = Array.from(document.querySelectorAll('.project-tab'));
             const panels = Array.from(document.querySelectorAll('.project-panel'));
@@ -530,6 +519,5 @@ document.addEventListener("DOMContentLoaded", () =>
             });
         })();
   </script>
- </body>
+</body>
 </html>
-

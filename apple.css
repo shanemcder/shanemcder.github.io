@@ -603,3 +603,41 @@ header .intro + .intro {
 header .intro:last-of-type {
   margin-bottom: 0;
 }
+
+
+/* Side-by-side project presentations */
+.project-side-by-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  column-gap: 44px;
+  align-items: start;
+}
+.project-side-by-side .project-content { min-width: 0; }
+.project-side-by-side .project-media { min-width: 0; width: 100%; }
+.project-side-by-side .project-media .hue-demo-video {
+  width: 100% !important;
+  max-width: 280px !important;
+  margin: 0 auto !important;
+}
+.project-side-by-side .project-media .project-gallery {
+  display: block;
+  margin: 0;
+}
+.project-side-by-side .project-media .project-gallery figure {
+  width: 100%;
+  max-width: 280px !important;
+}
+.project-side-by-side .project-media .project-gallery img {
+  width: 100%; height: auto; aspect-ratio: auto; object-fit: contain;
+}
+.project-side-by-side .project-media .taskmaster-carousel {
+  gap: 8px; margin-top: 0;
+}
+.project-side-by-side .project-media .carousel-arrow {
+  width: 30px; height: 30px; font-size: 24px;
+}
+.project-side-by-side .project-media .carousel-screen { min-width: 0; }
+@media (max-width: 700px) {
+  .project-side-by-side { grid-template-columns: 1fr; row-gap: 24px; }
+  .project-side-by-side .project-media { max-width: 340px; margin: 0 auto; }
+}
